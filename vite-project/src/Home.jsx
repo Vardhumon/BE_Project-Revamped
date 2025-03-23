@@ -244,12 +244,15 @@ export default function HomePage() {
       </div>
 
       {/* Timeline and Features */}
-      <div ref={featuresSectionRef} className="timeline-section relative py-20">
+      <div ref={featuresSectionRef} className="timeline-section relative py-20 bg-gradient-to-b from-black via-blue-900/20 to-black">
         {/* Center Timeline */}
         <div 
           ref={timelineRef}
-          className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-gradient-to-b from-blue-500 to-purple-500 h-0"
-          style={{ minHeight: "10px" }}
+          className="absolute left-1/2 transform -translate-x-1/2 w-[2px] bg-gradient-to-b from-transparent via-blue-500 to-transparent blur-[1px]"
+          style={{ 
+            minHeight: "10px",
+            boxShadow: "0 0 20px rgba(59, 130, 246, 0.5)"
+          }}
         />
 
         {/* Features with alternating sides */}
@@ -257,10 +260,11 @@ export default function HomePage() {
           {/* Feature 1 - Left Side */}
           <div 
             ref={addToFeaturesRef}
-            className="feature-item mb-32 grid grid-cols-1 md:grid-cols-2 gap-8 items-center"
+            className="feature-item mb-32 grid grid-cols-1 md:grid-cols-2 gap-8 items-center relative"
           >
-            <div className="p-6 bg-gradient-to-r from-blue-900/30 to-transparent rounded-lg backdrop-blur-sm relative overflow-hidden group">
-              <div className="absolute inset-0 bg-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 via-transparent to-transparent blur-xl" />
+            <div className="p-6 bg-gradient-to-r from-blue-900/30 via-blue-900/20 to-transparent rounded-lg backdrop-blur-sm relative overflow-hidden group">
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 via-purple-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
               <h3 className="text-3xl font-bold mb-4 text-blue-400">Resume-Building Projects</h3>
               <p className="text-gray-300 text-lg">
                 Create impressive projects that showcase your skills to potential employers. 
@@ -274,11 +278,12 @@ export default function HomePage() {
           {/* Feature 2 - Right Side */}
           <div 
             ref={addToFeaturesRef}
-            className="feature-item mb-32 grid grid-cols-1 md:grid-cols-2 gap-8 items-center"
+            className="feature-item mb-32 grid grid-cols-1 md:grid-cols-2 gap-8 items-center relative"
           >
+            <div className="absolute inset-0 bg-gradient-to-l from-red-500/5 via-transparent opacity-25 to-transparent blur-xl" />
             <div></div> {/* Empty div for left side */}
-            <div className="p-6 bg-gradient-to-r from-purple-900/30 to-transparent rounded-lg backdrop-blur-sm relative overflow-hidden group">
-              <div className="absolute inset-0 bg-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+            <div className="p-6 bg-gradient-to-r from-purple-900/30 via-purple-900/10 to-transparent rounded-lg backdrop-blur-sm relative overflow-hidden group">
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-500/5 via-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
               <h3 className="text-3xl font-bold mb-4 text-purple-400">Join Developer Communities</h3>
               <p className="text-gray-300 text-lg">
                 Connect with like-minded developers who share your interests and goals.
@@ -291,10 +296,11 @@ export default function HomePage() {
           {/* Feature 3 - Left Side */}
           <div 
             ref={addToFeaturesRef}
-            className="feature-item mb-32 grid grid-cols-1 md:grid-cols-2 gap-8 items-center"
+            className="feature-item mb-32 grid grid-cols-1 md:grid-cols-2 gap-8 items-center relative"
           >
-            <div className="p-6 bg-gradient-to-r from-blue-900/30 to-transparent rounded-lg backdrop-blur-sm relative overflow-hidden group">
-              <div className="absolute inset-0 bg-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 via-transparent to-transparent blur-xl" />
+            <div className="p-6 bg-gradient-to-r from-blue-900/30 via-blue-900/20 to-transparent rounded-lg backdrop-blur-sm relative overflow-hidden group">
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 via-purple-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
               <h3 className="text-3xl font-bold mb-4 text-blue-400">Skill Enhancement Tracking</h3>
               <p className="text-gray-300 text-lg">
                 Monitor your progress as you complete projects and learn new technologies.

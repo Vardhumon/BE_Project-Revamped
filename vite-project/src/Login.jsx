@@ -10,14 +10,15 @@ const BackgroundAnimation = () => {
         <motion.div
           key={i}
           initial={{ opacity: 0, scale: 0.5, y: 50 }}
-          animate={{ opacity: 0.5, scale: 1, y: -50 }}
+          animate={{ opacity: 0.7, scale: 1, y: -50 }}
           transition={{ duration: 6, repeat: Infinity, repeatType: "mirror", delay: i * 0.8 }}
           className="absolute bg-white rounded-full blur-3xl"
           style={{
             width: `${30 + i * 30}px`,
             height: `${30 + i * 30}px`,
             top: `${Math.random() * 100}%`,
-            left: `${Math.random() * 100}%`,
+            left: `${50 + Math.random() * 50}%`,
+            opacity: 0.3,
           }}
         />
       ))}
@@ -31,12 +32,13 @@ const Login = ({ onLogin }) => {
     password: "",
   });
 
+  const navigate = useNavigate();
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-  
-  const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -48,64 +50,59 @@ const Login = ({ onLogin }) => {
     }
   };
 
-  const backgroundElements = useMemo(() => <BackgroundAnimation />, []);
-
   return (
-    <div className="h-screen flex items-center justify-center bg-black relative overflow-hidden">
-      {backgroundElements}
-      
-      <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
-        className="w-full max-w-md p-8 bg-black bg-opacity-80 backdrop-blur-lg shadow-lg border border-white/30 rounded-xl"
-      >
-        <motion.h2
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="text-2xl font-bold text-white text-center"
-        >
-          Login
-        </motion.h2>
-        <form onSubmit={handleSubmit} className="mt-6">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="mb-4">
-            <label className="block text-sm font-medium text-gray-300 mb-2">Email:</label>
+    <div className="flex h-screen w-screen bg-black text-white">
+      {/* Left Section - Form */}
+      <div className="w-4/5 p-10 flex flex-col items-center justify-center">
+        <div className="w-3/5">
+          <h2 className="text-4xl font-semibold mb-10">Login</h2>
+          <form onSubmit={handleSubmit} className="space-y-6">
             <input
               type="email"
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className="w-full p-3 bg-black border border-white/30 text-white rounded-lg focus:ring-4 focus:ring-white focus:outline-none"
+              placeholder="Your Email"
+              className="w-3/4 p-3 bg-white/10 border border-white/30 rounded-lg focus:ring-4 focus:ring-white text-lg"
               required
             />
-          </motion.div>
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="mb-6">
-            <label className="block text-sm font-medium text-gray-300 mb-2">Password:</label>
             <input
               type="password"
               name="password"
               value={formData.password}
               onChange={handleChange}
-              className="w-full p-3 bg-black border border-white/30 text-white rounded-lg focus:ring-4 focus:ring-white focus:outline-none"
+              placeholder="Password"
+              className="w-3/4 p-3 bg-white/10 border border-white/30 rounded-lg focus:ring-4 focus:ring-white text-lg"
               required
             />
-          </motion.div>
-          <motion.button
-            type="submit"
-            whileHover={{ scale: 1.05 }}
-            animate={{ boxShadow: [
-              "0px 0px 10px rgba(255, 255, 255, 0.5)",
-              "0px 0px 20px rgba(255, 255, 255, 0.8)",
-              "0px 0px 10px rgba(255, 255, 255, 0.5)"
-            ] }}
-            transition={{ repeat: Infinity, duration: 1.5 }}
-            className="w-full p-3 bg-white text-black font-semibold rounded-lg transition duration-300 shadow-lg"
-          >
-            Login
-          </motion.button>
-        </form>
-      </motion.div>
+            <div className="flex flex-col items-start gap-4">
+              <button
+                type="submit"
+                className="w-1/3 bg-white text-black py-3 text-xl rounded-lg font-semibold
+                  transform transition-all duration-300 ease-in-out
+                  hover:scale-105 hover:shadow-[0_0_15px_rgba(255,255,255,0.8)]
+                  active:scale-95 active:bg-gray-200"
+              >
+                Login
+              </button>
+              <p className="text-gray-400">
+                Don't have an account? {" "}
+                <button 
+                  onClick={() => navigate("/signup")} 
+                  className="text-white hover:underline"
+                >
+                  Sign up here
+                </button>
+              </p>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      {/* Right Section - Animation */}
+      <div className="w-1/5 flex justify-center items-center relative overflow-hidden">
+        <BackgroundAnimation />
+      </div>
     </div>
   );
 };
