@@ -12,17 +12,31 @@ const OnboardingSlide = ({
   onPrev 
 }) => {
   return (
-    <div className="relative p-8 rounded-2xl bg-gradient-to-br bg-opacity-10 backdrop-blur-lg">
+    <motion.div 
+      initial={{ opacity: 0, x: 100 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: -100 }}
+      className="relative p-8 rounded-2xl bg-gradient-to-br bg-opacity-10 backdrop-blur-lg"
+    >
       <div className={`absolute inset-0 bg-gradient-to-r ${color} opacity-5 rounded-2xl`} />
       
       <div className="grid md:grid-cols-2 gap-8 items-center">
         <div className="space-y-6">
-          <h2 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400"
+          >
             {title}
-          </h2>
-          <p className="text-xl text-gray-300">
+          </motion.h2>
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="text-xl text-gray-300"
+          >
             {description}
-          </p>
+          </motion.p>
           <div className="flex items-center gap-4">
             <button
               onClick={onPrev}
@@ -36,16 +50,19 @@ const OnboardingSlide = ({
               Previous
             </button>
             <button
-              onClick={onNext}
+              onClick={() => onNext('next')}
               className="px-6 py-2 rounded-lg bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 transition-colors"
             >
-              Next
+              {currentSlide === totalSlides - 1 ? 'Get Started' : 'Next'}
             </button>
           </div>
           <div className="flex gap-2 mt-4">
             {[...Array(totalSlides)].map((_, i) => (
-              <div
+              <motion.div
                 key={i}
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ delay: i * 0.1 }}
                 className={`h-2 rounded-full transition-all duration-300 ${
                   i === currentSlide 
                     ? 'w-8 bg-blue-500' 
@@ -55,15 +72,20 @@ const OnboardingSlide = ({
             ))}
           </div>
         </div>
-        <div className="relative">
+        <motion.div 
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.3 }}
+          className="relative"
+        >
           <img 
             src={image} 
             alt={title} 
             className="w-full max-w-md mx-auto"
           />
-        </div>
+        </motion.div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

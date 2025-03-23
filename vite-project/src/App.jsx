@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
+// Add Onboarding import
+import Onboarding from "./Onboarding";
 import Profile from "./Profile";
 import HomePage from "./Home";
 import View from "./View";
@@ -16,12 +18,15 @@ import './App.css';
 export default function App() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [hasVisited, setHasVisited] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
+    const isVisited = localStorage.getItem("isVisited");
     if (token) {
       setUser({ token });
     }
+    setHasVisited(!!isVisited);
     setLoading(false);
   }, []);
 
@@ -29,6 +34,7 @@ export default function App() {
   const onLogin = (token, userData) => {
     localStorage.setItem("token", token);
     localStorage.setItem("user", JSON.stringify(userData));
+
     setUser(userData);
   };
 
@@ -57,11 +63,19 @@ export default function App() {
   return (
     <Router>
       <div className="min-h-screen bg-black">
-        <Navbar user={user} onLogout={onLogout} className="mb-16" />
+        {user && <Navbar user={user} onLogout={onLogout} className="mb-16" />}
         <Routes className="mt-16">
           <Route 
             path="/" 
-            element={user ? <HomePage /> : <Navigate to="/signup" />} 
+            element={
+              !hasVisited ? (
+                <Onboarding />
+              ) : user ? (
+                <HomePage />
+              ) : (
+                <Navigate to="/signup" />
+              )
+            } 
           />
           <Route 
             path="/login" 

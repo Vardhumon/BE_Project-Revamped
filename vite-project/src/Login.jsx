@@ -44,20 +44,44 @@ const Login = ({ onLogin }) => {
     try {
       const response = await axios.post("http://localhost:5000/api/login", formData);
       onLogin(response.data.token, response.data.user);
-      navigate("/");
+    localStorage.setItem("isVisited", "true");
+
+      setTimeout(() => {
+        navigate('/');
+      }, 100);
     } catch (err) {
       console.error("Login failed:", err.response?.data?.message || "Server error");
     }
   };
 
   return (
-    <div className="flex h-screen w-screen bg-black text-white">
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.8 }}
+      className="flex h-screen w-screen bg-black text-white"
+    >
       {/* Left Section - Form */}
-      <div className="w-4/5 p-10 flex flex-col items-center justify-center">
+      <motion.div 
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.8, delay: 0.2 }}
+        className="w-4/5 p-10 flex flex-col items-center justify-center"
+      >
         <div className="w-3/5">
-          <h2 className="text-4xl font-semibold mb-10">Login</h2>
+          <motion.h2 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="text-4xl font-semibold mb-10"
+          >
+            Login
+          </motion.h2>
           <form onSubmit={handleSubmit} className="space-y-6">
-            <input
+            <motion.input
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
               type="email"
               name="email"
               value={formData.email}
@@ -66,7 +90,10 @@ const Login = ({ onLogin }) => {
               className="w-3/4 p-3 bg-white/10 border border-white/30 rounded-lg focus:ring-4 focus:ring-white text-lg"
               required
             />
-            <input
+            <motion.input
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.7 }}
               type="password"
               name="password"
               value={formData.password}
@@ -75,7 +102,12 @@ const Login = ({ onLogin }) => {
               className="w-3/4 p-3 bg-white/10 border border-white/30 rounded-lg focus:ring-4 focus:ring-white text-lg"
               required
             />
-            <div className="flex flex-col items-start gap-4">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.8 }}
+              className="flex flex-col items-start gap-4"
+            >
               <button
                 type="submit"
                 className="w-1/3 bg-white text-black py-3 text-xl rounded-lg font-semibold
@@ -94,16 +126,21 @@ const Login = ({ onLogin }) => {
                   Sign up here
                 </button>
               </p>
-            </div>
+            </motion.div>
           </form>
         </div>
-      </div>
+      </motion.div>
 
       {/* Right Section - Animation */}
-      <div className="w-1/5 flex justify-center items-center relative overflow-hidden">
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 1, delay: 0.3 }}
+        className="w-1/5 flex justify-center items-center relative overflow-hidden"
+      >
         <BackgroundAnimation />
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 
