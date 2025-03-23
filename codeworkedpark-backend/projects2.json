@@ -1,0 +1,990 @@
+[
+  {
+    "title": "Virtual Classroom Platform",
+    "description": "Build an interactive virtual classroom with real-time video conferencing, whiteboard, and course management.",
+    "techStack": ["React", "WebRTC", "Socket.io", "MongoDB"],
+    "difficultyLevel": "Hard",
+    "steps": [
+      {
+        "step": "Set up video conferencing",
+        "subSteps": [
+          "Implement WebRTC for peer-to-peer video streaming",
+          "Create video chat rooms with Socket.io",
+          "Add screen sharing capabilities"
+        ]
+      },
+      {
+        "step": "Build interactive whiteboard",
+        "subSteps": [
+          "Create a canvas-based whiteboard",
+          "Enable real-time drawing collaboration",
+          "Add text and shape tools"
+        ]
+      },
+      {
+        "step": "Implement course management",
+        "subSteps": [
+          "Create course creation and enrollment system",
+          "Add assignment submission functionality",
+          "Implement progress tracking"
+        ]
+      }
+    ],
+    "testingMetrics": [
+      "Test video streaming quality and latency",
+      "Verify whiteboard synchronization",
+      "Ensure course materials are properly managed"
+    ],
+    "tag": "Full-Stack"
+  },
+  {
+    "title": "Smart Home Automation",
+    "description": "Create an IoT-based home automation system with mobile app control and smart device integration.",
+    "techStack": ["React Native", "Node.js", "MQTT", "MongoDB"],
+    "difficultyLevel": "Hard",
+    "steps": [
+      {
+        "step": "Set up IoT backend",
+        "subSteps": [
+          "Configure MQTT broker for device communication",
+          "Create API endpoints for device control",
+          "Implement device state management"
+        ]
+      },
+      {
+        "step": "Develop mobile app",
+        "subSteps": [
+          "Build UI for device control",
+          "Implement real-time device status updates",
+          "Add automation scheduling"
+        ]
+      },
+      {
+        "step": "Device integration",
+        "subSteps": [
+          "Connect smart lights and thermostats",
+          "Add support for security cameras",
+          "Implement voice control"
+        ]
+      }
+    ],
+    "testingMetrics": [
+      "Verify device response time",
+      "Test automation reliability",
+      "Check security measures"
+    ],
+    "tag": "IoT"
+  },
+  {
+    "title": "Music Streaming Service",
+    "description": "Build a music streaming platform with personalized recommendations and playlist management.",
+    "techStack": ["Vue.js", "Node.js", "PostgreSQL", "Redis"],
+    "difficultyLevel": "Medium",
+    "steps": [
+      {
+        "step": "Audio streaming setup",
+        "subSteps": [
+          "Implement audio file streaming",
+          "Create playlist management system",
+          "Add music player controls"
+        ]
+      },
+      {
+        "step": "User features",
+        "subSteps": [
+          "Build user authentication",
+          "Create playlist sharing",
+          "Implement favorite tracks"
+        ]
+      },
+      {
+        "step": "Recommendation system",
+        "subSteps": [
+          "Track user listening history",
+          "Implement collaborative filtering",
+          "Create personalized playlists"
+        ]
+      }
+    ],
+    "testingMetrics": [
+      "Test streaming performance",
+      "Verify recommendation accuracy",
+      "Check playlist management"
+    ],
+    "tag": "Full-Stack"
+  },
+  {
+    "title": "Augmented Reality Navigation",
+    "description": "Develop an AR-based indoor navigation system using smartphone cameras.",
+    "techStack": ["React Native", "ARKit", "ARCore", "Node.js"],
+    "difficultyLevel": "Hard",
+    "steps": [
+      {
+        "step": "AR implementation",
+        "subSteps": [
+          "Set up ARKit/ARCore integration",
+          "Implement marker detection",
+          "Create AR path visualization"
+        ]
+      },
+      {
+        "step": "Navigation system",
+        "subSteps": [
+          "Develop indoor mapping",
+          "Create pathfinding algorithm",
+          "Implement real-time location tracking"
+        ]
+      },
+      {
+        "step": "User interface",
+        "subSteps": [
+          "Build AR camera view",
+          "Add navigation controls",
+          "Create location search"
+        ]
+      }
+    ],
+    "testingMetrics": [
+      "Test AR accuracy",
+      "Verify navigation precision",
+      "Check performance on different devices"
+    ],
+    "tag": "Mobile"
+  },
+  {
+    "title": "Recipe Recommendation System",
+    "description": "Create an AI-powered recipe recommendation system based on available ingredients.",
+    "techStack": ["Python", "FastAPI", "TensorFlow", "PostgreSQL"],
+    "difficultyLevel": "Medium",
+    "steps": [
+      {
+        "step": "Data collection",
+        "subSteps": [
+          "Scrape recipe databases",
+          "Process ingredient lists",
+          "Create recipe embeddings"
+        ]
+      },
+      {
+        "step": "ML model development",
+        "subSteps": [
+          "Train ingredient compatibility model",
+          "Implement recommendation algorithm",
+          "Create nutrition analysis"
+        ]
+      },
+      {
+        "step": "API development",
+        "subSteps": [
+          "Build REST API endpoints",
+          "Implement search functionality",
+          "Add user preferences"
+        ]
+      }
+    ],
+    "testingMetrics": [
+      "Test recommendation relevance",
+      "Verify ingredient matching",
+      "Check API response time"
+    ],
+    "tag": "ML"
+  },
+  {
+    "title": "Real-time Translation App",
+    "description": "Build a mobile app for real-time text and speech translation using ML models.",
+    "techStack": ["Flutter", "TensorFlow Lite", "Firebase", "Node.js"],
+    "difficultyLevel": "Hard",
+    "steps": [
+      {
+        "step": "Translation engine",
+        "subSteps": [
+          "Implement text translation API",
+          "Add speech recognition",
+          "Create language detection"
+        ]
+      },
+      {
+        "step": "Mobile app development",
+        "subSteps": [
+          "Build translation interface",
+          "Implement voice input",
+          "Add offline support"
+        ]
+      },
+      {
+        "step": "Performance optimization",
+        "subSteps": [
+          "Optimize model size",
+          "Implement caching",
+          "Add batch translation"
+        ]
+      }
+    ],
+    "testingMetrics": [
+      "Test translation accuracy",
+      "Verify speech recognition",
+      "Check offline functionality"
+    ],
+    "tag": "Mobile + ML"
+  },
+  {
+    "title": "Stock Trading Simulator",
+    "description": "Create a virtual stock trading platform with real-time market data and portfolio tracking.",
+    "techStack": ["Angular", "Node.js", "MongoDB", "WebSocket"],
+    "difficultyLevel": "Medium",
+    "steps": [
+      {
+        "step": "Market data integration",
+        "subSteps": [
+          "Connect to stock market API",
+          "Implement real-time updates",
+          "Create price alerts"
+        ]
+      },
+      {
+        "step": "Trading system",
+        "subSteps": [
+          "Build order management",
+          "Implement portfolio tracking",
+          "Add transaction history"
+        ]
+      },
+      {
+        "step": "Analysis tools",
+        "subSteps": [
+          "Create technical indicators",
+          "Add chart visualization",
+          "Implement performance metrics"
+        ]
+      }
+    ],
+    "testingMetrics": [
+      "Test order execution",
+      "Verify portfolio calculations",
+      "Check real-time updates"
+    ],
+    "tag": "Full-Stack"
+  },
+  {
+    "title": "Collaborative Code Editor",
+    "description": "Build a real-time collaborative code editor with syntax highlighting and version control.",
+    "techStack": ["React", "Socket.io", "Express", "MongoDB"],
+    "difficultyLevel": "Hard",
+    "steps": [
+      {
+        "step": "Editor setup",
+        "subSteps": [
+          "Implement code editor component",
+          "Add syntax highlighting",
+          "Create file management"
+        ]
+      },
+      {
+        "step": "Collaboration features",
+        "subSteps": [
+          "Implement real-time editing",
+          "Add cursor sharing",
+          "Create chat system"
+        ]
+      },
+      {
+        "step": "Version control",
+        "subSteps": [
+          "Implement file versioning",
+          "Add branch management",
+          "Create merge functionality"
+        ]
+      }
+    ],
+    "testingMetrics": [
+      "Test collaboration synchronization",
+      "Verify version control",
+      "Check editor performance"
+    ],
+    "tag": "Full-Stack"
+  },
+  {
+    "title": "Personal Finance Dashboard",
+    "description": "Create a comprehensive financial management dashboard with expense tracking and investment monitoring.",
+    "techStack": ["Svelte", "FastAPI", "PostgreSQL", "Redis"],
+    "difficultyLevel": "Medium",
+    "steps": [
+      {
+        "step": "Financial tracking",
+        "subSteps": [
+          "Implement expense categories",
+          "Create budget management",
+          "Add income tracking"
+        ]
+      },
+      {
+        "step": "Investment monitoring",
+        "subSteps": [
+          "Connect to investment APIs",
+          "Create portfolio dashboard",
+          "Add performance analytics"
+        ]
+      },
+      {
+        "step": "Reporting system",
+        "subSteps": [
+          "Generate financial reports",
+          "Create data visualizations",
+          "Implement export functionality"
+        ]
+      }
+    ],
+    "testingMetrics": [
+      "Test calculation accuracy",
+      "Verify data synchronization",
+      "Check report generation"
+    ],
+    "tag": "Full-Stack"
+  },
+  {
+    "title": "AI Image Enhancement",
+    "description": "Build an AI-powered image enhancement tool for improving photo quality.",
+    "techStack": ["Python", "TensorFlow", "OpenCV", "Flask"],
+    "difficultyLevel": "Hard",
+    "steps": [
+      {
+        "step": "Model development",
+        "subSteps": [
+          "Train super-resolution model",
+          "Implement color correction",
+          "Add noise reduction"
+        ]
+      },
+      {
+        "step": "Image processing",
+        "subSteps": [
+          "Create image preprocessing",
+          "Implement batch processing",
+          "Add format conversion"
+        ]
+      },
+      {
+        "step": "API development",
+        "subSteps": [
+          "Build REST API endpoints",
+          "Implement file upload",
+          "Create progress tracking"
+        ]
+      }
+    ],
+    "testingMetrics": [
+      "Test enhancement quality",
+      "Verify processing speed",
+      "Check API reliability"
+    ],
+    "tag": "ML"
+  },
+  {
+    "title": "Healthcare Management System",
+    "description": "Build a comprehensive healthcare management system for clinics and hospitals.",
+    "techStack": ["Angular", "Spring Boot", "PostgreSQL", "Redis"],
+    "difficultyLevel": "Hard",
+    "steps": [
+      {
+        "step": "Patient Management",
+        "subSteps": [
+          "Implement patient registration and records",
+          "Create appointment scheduling system",
+          "Add medical history tracking"
+        ]
+      },
+      {
+        "step": "Doctor Portal",
+        "subSteps": [
+          "Build doctor dashboard",
+          "Create prescription management",
+          "Implement patient history viewer"
+        ]
+      },
+      {
+        "step": "Administrative Features",
+        "subSteps": [
+          "Add billing and insurance processing",
+          "Create inventory management",
+          "Implement reporting system"
+        ]
+      }
+    ],
+    "testingMetrics": [
+      "Verify patient data security",
+      "Test appointment scheduling accuracy",
+      "Check billing calculations"
+    ],
+    "tag": "Full-Stack"
+  },
+  {
+    "title": "Video Recommendation Engine",
+    "description": "Create an AI-powered video recommendation system similar to YouTube's algorithm.",
+    "techStack": ["Python", "TensorFlow", "FastAPI", "MongoDB"],
+    "difficultyLevel": "Hard",
+    "steps": [
+      {
+        "step": "Data Collection",
+        "subSteps": [
+          "Gather user interaction data",
+          "Process video metadata",
+          "Create feature vectors"
+        ]
+      },
+      {
+        "step": "Model Development",
+        "subSteps": [
+          "Implement collaborative filtering",
+          "Create content-based filtering",
+          "Build hybrid recommendation system"
+        ]
+      },
+      {
+        "step": "API Development",
+        "subSteps": [
+          "Create recommendation endpoints",
+          "Implement caching system",
+          "Add performance monitoring"
+        ]
+      }
+    ],
+    "testingMetrics": [
+      "Measure recommendation accuracy",
+      "Test system scalability",
+      "Evaluate response times"
+    ],
+    "tag": "Machine Learning"
+  },
+  {
+    "title": "Real-time Analytics Dashboard",
+    "description": "Build a real-time analytics platform for business intelligence.",
+    "techStack": ["Vue.js", "Node.js", "ClickHouse", "Socket.io"],
+    "difficultyLevel": "Medium",
+    "steps": [
+      {
+        "step": "Data Pipeline",
+        "subSteps": [
+          "Set up real-time data ingestion",
+          "Implement data processing",
+          "Create aggregation system"
+        ]
+      },
+      {
+        "step": "Dashboard Development",
+        "subSteps": [
+          "Build interactive charts",
+          "Create customizable widgets",
+          "Implement real-time updates"
+        ]
+      },
+      {
+        "step": "Reporting System",
+        "subSteps": [
+          "Add automated reporting",
+          "Create export functionality",
+          "Implement alert system"
+        ]
+      }
+    ],
+    "testingMetrics": [
+      "Test real-time data accuracy",
+      "Verify dashboard performance",
+      "Check export functionality"
+    ],
+    "tag": "Full-Stack"
+  },
+  {
+    "title": "Image Generation AI",
+    "description": "Create an AI system that generates images from text descriptions.",
+    "techStack": ["Python", "PyTorch", "FastAPI", "React"],
+    "difficultyLevel": "Hard",
+    "steps": [
+      {
+        "step": "Model Development",
+        "subSteps": [
+          "Implement GAN architecture",
+          "Train on image dataset",
+          "Optimize generation quality"
+        ]
+      },
+      {
+        "step": "Text Processing",
+        "subSteps": [
+          "Create text embedding system",
+          "Implement prompt processing",
+          "Add style conditioning"
+        ]
+      },
+      {
+        "step": "Web Interface",
+        "subSteps": [
+          "Build image generation UI",
+          "Add result gallery",
+          "Implement style controls"
+        ]
+      }
+    ],
+    "testingMetrics": [
+      "Evaluate image quality",
+      "Test generation speed",
+      "Check prompt accuracy"
+    ],
+    "tag": "Machine Learning"
+  },
+  {
+    "title": "Learning Management System",
+    "description": "Develop a comprehensive platform for online education and course management.",
+    "techStack": ["Next.js", "Django", "PostgreSQL", "Redis"],
+    "difficultyLevel": "Medium",
+    "steps": [
+      {
+        "step": "Course Management",
+        "subSteps": [
+          "Create course creation system",
+          "Implement content organization",
+          "Add assessment tools"
+        ]
+      },
+      {
+        "step": "Student Portal",
+        "subSteps": [
+          "Build learning interface",
+          "Create progress tracking",
+          "Implement discussion forums"
+        ]
+      },
+      {
+        "step": "Analytics Dashboard",
+        "subSteps": [
+          "Add learning analytics",
+          "Create performance reports",
+          "Implement feedback system"
+        ]
+      }
+    ],
+    "testingMetrics": [
+      "Test course delivery",
+      "Verify assessment grading",
+      "Check analytics accuracy"
+    ],
+    "tag": "Full-Stack"
+  },
+  {
+    "title": "Speech Recognition System",
+    "description": "Build a speech recognition system with support for multiple languages.",
+    "techStack": ["Python", "TensorFlow", "FastAPI", "WebSocket"],
+    "difficultyLevel": "Hard",
+    "steps": [
+      {
+        "step": "Model Development",
+        "subSteps": [
+          "Implement acoustic model",
+          "Create language model",
+          "Add noise reduction"
+        ]
+      },
+      {
+        "step": "Audio Processing",
+        "subSteps": [
+          "Build audio preprocessing",
+          "Implement feature extraction",
+          "Create post-processing"
+        ]
+      },
+      {
+        "step": "API Integration",
+        "subSteps": [
+          "Create real-time transcription",
+          "Add language detection",
+          "Implement streaming support"
+        ]
+      }
+    ],
+    "testingMetrics": [
+      "Test recognition accuracy",
+      "Verify language support",
+      "Check processing speed"
+    ],
+    "tag": "Machine Learning"
+  },
+  {
+    "title": "Task Management App",
+    "description": "Create a simple task management application with basic CRUD operations and user authentication.",
+    "techStack": ["React", "Express", "MongoDB", "JWT"],
+    "difficultyLevel": "Easy",
+    "steps": [
+      {
+        "step": "User Authentication",
+        "subSteps": [
+          "Set up basic user registration",
+          "Implement login functionality",
+          "Add password reset"
+        ]
+      },
+      {
+        "step": "Task Features",
+        "subSteps": [
+          "Create task CRUD operations",
+          "Add due date functionality",
+          "Implement task categories"
+        ]
+      },
+      {
+        "step": "UI Development",
+        "subSteps": [
+          "Build responsive dashboard",
+          "Create task filters",
+          "Add sorting options"
+        ]
+      }
+    ],
+    "testingMetrics": [
+      "Verify CRUD operations",
+      "Test user authentication",
+      "Check responsive design"
+    ],
+    "tag": "Full-Stack"
+  },
+  {
+    "title": "Weather Forecast App",
+    "description": "Build a simple weather forecast application using a public weather API.",
+    "techStack": ["HTML", "CSS", "JavaScript", "OpenWeather API"],
+    "difficultyLevel": "Easy",
+    "steps": [
+      {
+        "step": "API Integration",
+        "subSteps": [
+          "Set up API connection",
+          "Handle weather data fetching",
+          "Implement location search"
+        ]
+      },
+      {
+        "step": "Weather Display",
+        "subSteps": [
+          "Create weather card layout",
+          "Add temperature conversion",
+          "Display weather icons"
+        ]
+      },
+      {
+        "step": "Additional Features",
+        "subSteps": [
+          "Add 5-day forecast",
+          "Implement geolocation",
+          "Create loading states"
+        ]
+      }
+    ],
+    "testingMetrics": [
+      "Test API integration",
+      "Verify data display",
+      "Check responsive layout"
+    ],
+    "tag": "Full-Stack"
+  },
+  {
+    "title": "Image Classification App",
+    "description": "Create a simple image classification application using a pre-trained model.",
+    "techStack": ["Python", "TensorFlow", "Flask", "HTML"],
+    "difficultyLevel": "Easy",
+    "steps": [
+      {
+        "step": "Model Setup",
+        "subSteps": [
+          "Import pre-trained model",
+          "Set up image preprocessing",
+          "Create prediction function"
+        ]
+      },
+      {
+        "step": "Web Interface",
+        "subSteps": [
+          "Build upload form",
+          "Create result display",
+          "Add basic styling"
+        ]
+      },
+      {
+        "step": "Deployment",
+        "subSteps": [
+          "Set up Flask server",
+          "Handle file uploads",
+          "Display predictions"
+        ]
+      }
+    ],
+    "testingMetrics": [
+      "Test image upload",
+      "Verify predictions",
+      "Check error handling"
+    ],
+    "tag": "Machine Learning"
+  },
+  {
+    "title": "Note Taking App",
+    "description": "Build a simple note-taking application with markdown support.",
+    "techStack": ["React", "LocalStorage", "Marked.js", "Bootstrap"],
+    "difficultyLevel": "Easy",
+    "steps": [
+      {
+        "step": "Note Editor",
+        "subSteps": [
+          "Create text editor",
+          "Add markdown preview",
+          "Implement auto-save"
+        ]
+      },
+      {
+        "step": "Note Management",
+        "subSteps": [
+          "Add note creation",
+          "Implement note deletion",
+          "Create note list"
+        ]
+      },
+      {
+        "step": "Storage",
+        "subSteps": [
+          "Set up local storage",
+          "Add export feature",
+          "Implement backup"
+        ]
+      }
+    ],
+    "testingMetrics": [
+      "Test markdown rendering",
+      "Verify storage functionality",
+      "Check responsive design"
+    ],
+    "tag": "Full-Stack"
+  },
+  {
+    "title": "Sentiment Analysis Tool",
+    "description": "Create a simple sentiment analysis tool for text using pre-trained models.",
+    "techStack": ["Python", "NLTK", "Flask", "Bootstrap"],
+    "difficultyLevel": "Easy",
+    "steps": [
+      {
+        "step": "Model Setup",
+        "subSteps": [
+          "Import NLTK library",
+          "Set up text preprocessing",
+          "Create analysis function"
+        ]
+      },
+      {
+        "step": "Web Interface",
+        "subSteps": [
+          "Build input form",
+          "Create result display",
+          "Add basic styling"
+        ]
+      },
+      {
+        "step": "Analysis Features",
+        "subSteps": [
+          "Add sentiment scores",
+          "Create visual feedback",
+          "Implement batch analysis"
+        ]
+      }
+    ],
+    "testingMetrics": [
+      "Test text analysis",
+      "Verify result accuracy",
+      "Check input handling"
+    ],
+    "tag": "Machine Learning"
+  },
+  {
+    "title": "Recipe Book App",
+    "description": "Create a simple recipe management application with search and filtering capabilities.",
+    "techStack": ["HTML", "CSS", "JavaScript", "Firebase"],
+    "difficultyLevel": "Easy",
+    "steps": [
+      {
+        "step": "Recipe Management",
+        "subSteps": [
+          "Create recipe form",
+          "Add ingredient list",
+          "Implement cooking steps"
+        ]
+      },
+      {
+        "step": "Search Features",
+        "subSteps": [
+          "Add recipe search",
+          "Implement category filters",
+          "Create ingredient filter"
+        ]
+      },
+      {
+        "step": "User Features",
+        "subSteps": [
+          "Add favorite recipes",
+          "Create shopping lists",
+          "Implement recipe sharing"
+        ]
+      }
+    ],
+    "testingMetrics": [
+      "Test search functionality",
+      "Verify recipe storage",
+      "Check filter accuracy"
+    ],
+    "tag": "Full-Stack"
+  },
+  {
+    "title": "Budget Calculator",
+    "description": "Build a simple budget calculation tool with expense tracking and visualization.",
+    "techStack": ["React", "Chart.js", "LocalStorage", "Bootstrap"],
+    "difficultyLevel": "Easy",
+    "steps": [
+      {
+        "step": "Expense Tracking",
+        "subSteps": [
+          "Create expense form",
+          "Add category management",
+          "Implement date filtering"
+        ]
+      },
+      {
+        "step": "Budget Analysis",
+        "subSteps": [
+          "Add expense charts",
+          "Create budget limits",
+          "Implement alerts"
+        ]
+      },
+      {
+        "step": "Data Management",
+        "subSteps": [
+          "Set up local storage",
+          "Add data export",
+          "Create backup system"
+        ]
+      }
+    ],
+    "testingMetrics": [
+      "Verify calculations",
+      "Test data persistence",
+      "Check visualization"
+    ],
+    "tag": "Full-Stack"
+  },
+  {
+    "title": "Basic Face Detection",
+    "description": "Create a simple face detection application using pre-trained models.",
+    "techStack": ["Python", "OpenCV", "Flask", "JavaScript"],
+    "difficultyLevel": "Easy",
+    "steps": [
+      {
+        "step": "Detection Setup",
+        "subSteps": [
+          "Import face detection model",
+          "Set up webcam capture",
+          "Create detection function"
+        ]
+      },
+      {
+        "step": "Web Interface",
+        "subSteps": [
+          "Build camera view",
+          "Add capture button",
+          "Create result display"
+        ]
+      },
+      {
+        "step": "Features",
+        "subSteps": [
+          "Add face counting",
+          "Implement image saving",
+          "Create basic filters"
+        ]
+      }
+    ],
+    "testingMetrics": [
+      "Test detection accuracy",
+      "Verify camera integration",
+      "Check response time"
+    ],
+    "tag": "Machine Learning"
+  },
+  {
+    "title": "Quiz Application",
+    "description": "Build a simple quiz application with multiple choice questions and scoring.",
+    "techStack": ["HTML", "CSS", "JavaScript", "JSON"],
+    "difficultyLevel": "Easy",
+    "steps": [
+      {
+        "step": "Quiz Engine",
+        "subSteps": [
+          "Create question format",
+          "Add scoring system",
+          "Implement timer"
+        ]
+      },
+      {
+        "step": "User Interface",
+        "subSteps": [
+          "Build question display",
+          "Create answer buttons",
+          "Add progress tracker"
+        ]
+      },
+      {
+        "step": "Results System",
+        "subSteps": [
+          "Calculate final score",
+          "Show correct answers",
+          "Create score history"
+        ]
+      }
+    ],
+    "testingMetrics": [
+      "Test scoring accuracy",
+      "Verify timer function",
+      "Check response handling"
+    ],
+    "tag": "Full-Stack"
+  },
+  {
+    "title": "Text Summarizer",
+    "description": "Create a simple text summarization tool using basic NLP techniques.",
+    "techStack": ["Python", "NLTK", "Flask", "HTML"],
+    "difficultyLevel": "Easy",
+    "steps": [
+      {
+        "step": "Text Processing",
+        "subSteps": [
+          "Implement text cleaning",
+          "Add sentence scoring",
+          "Create summary extraction"
+        ]
+      },
+      {
+        "step": "Web Interface",
+        "subSteps": [
+          "Build text input form",
+          "Create summary display",
+          "Add length control"
+        ]
+      },
+      {
+        "step": "Additional Features",
+        "subSteps": [
+          "Add keyword extraction",
+          "Implement file upload",
+          "Create export option"
+        ]
+      }
+    ],
+    "testingMetrics": [
+      "Test summary quality",
+      "Verify text processing",
+      "Check input handling"
+    ],
+    "tag": "Machine Learning"
+  }
+]
