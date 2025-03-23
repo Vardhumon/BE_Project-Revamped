@@ -21,7 +21,7 @@ const communityRoutes = require('./src/routes/community');
 const userRoutes = require('./src/routes/user');
 const projectRoutes = require('./src/routes/project');
 const commentRoutes = require('./src/routes/comment');
-
+const sharedProjectRoutes = require('./src/routes/sharedProjectRoutes');
 // Import DB connection
 const connectDB = require('./src/config/db');
 
@@ -40,7 +40,7 @@ app.use('/api/', communityRoutes);
 app.use('/api/', userRoutes);
 app.use('/api/', projectRoutes);
 app.use('/api/', commentRoutes);
-
+app.use('/api', sharedProjectRoutes)
 // Socket.io setup
 const server = http.createServer(app);
 const io = new Server(server, {

@@ -12,14 +12,24 @@ export default function Choices() {
   const cardContainerRef = useRef(null);
   const experienceRef = useRef(null);
   const nextButtonRef = useRef(null);
+  const [selectedCategories, setSelectedCategories] = useState([]);
   
   // All Available Tech Stacks with categories
   const techCategories = {
     "Frontend": ["React", "Next.js", "Flutter"],
-    "Backend": ["Node.js", "Django", "Flask", "Firebase"],
+    "Backend": ["Node.js", "Django", "Flask", "Firebase","MongoDB"],
     "Data & ML": ["Python", "NLTK", "TensorFlow", "ML"],
-    "Other": ["DevOps", "MongoDB"]
+    "Other": ["DevOps"]
   };
+
+  const categories = [
+    "Full-Stack",
+    "Machine Learning",
+    "WEB3",
+    "DevOps",
+    "Full-Stack + ML"
+  ];
+
 
   // Flatten tech stacks for easier handling
   const allTechStack = Object.values(techCategories).flat();
@@ -29,7 +39,7 @@ export default function Choices() {
     const user = JSON.parse(localStorage.getItem("user")) || {};
     const techstack = JSON.parse(localStorage.getItem("techStack")) || user.techStack || [];
     const experienceLevel = user.experienceLevel || localStorage.getItem("experience") || "";
-    
+    const savedCategories = JSON.parse(localStorage.getItem("selectedCategories")) || "Full-Stack";
     // Ensure proper separation of multiple tech stacks
     const separatedTech = Array.isArray(techstack) 
       ? techstack.flatMap(tech => tech.split(", ").map(t => t.trim()))
@@ -37,6 +47,7 @@ export default function Choices() {
     
     setSelectedTech(separatedTech);
     setExperience(experienceLevel);
+    setSelectedCategories(savedCategories);
     
     // Initial GSAP animations
     gsap.fromTo(
@@ -114,19 +125,17 @@ export default function Choices() {
 
   // Navigate to Projects Page
   const handleNext = () => {
-    if (selectedTech.length === 0 || experience === "") {
-      // Shake the button to indicate error
+    if (selectedTech.length === 0 || experience === "" || selectedCategories.length === 0) {
       gsap.to(nextButtonRef.current, {
         x: [-10, 10, -10, 10, 0],
         duration: 0.4,
         ease: "power2.inOut"
       });
       
-      alert("Please select at least one tech stack and experience level!");
+      alert("Please select at least one technology, category, and experience level!");
       return;
     }
     
-    // Exit animation before navigation
     gsap.to(".container", { 
       opacity: 0, 
       y: -30, 
@@ -134,6 +143,25 @@ export default function Choices() {
       onComplete: () => navigate("/create-project")
     });
   };
+
+  const handleCategorySelect = (category) => {
+    // If clicking the already selected category, do nothing
+    if (selectedCategories === category) {
+      return;
+    }
+    
+    // Set the single selected category
+    setSelectedCategories(category);
+    localStorage.setItem("selectedCategories", JSON.stringify(category));
+    
+    // Animate the category items
+    gsap.fromTo(
+      `.category-${category.replace(/\s+/g, '-').toLowerCase()}`,
+      { scale: 0.95 },
+      { scale: 1, duration: 0.5, ease: "elastic.out(1, 0.5)" }
+    );
+  };
+  
 
   // Filter Remaining Tech (Only Show Unselected Ones)
   const getRemainingTechInCategory = (category) => {
@@ -145,7 +173,7 @@ export default function Choices() {
       <div className="w-full max-w-4xl">
         <h1 
           ref={titleRef}
-          className="text-5xl font-bold mb-10 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600"
+          className="text-4xl font-bold mb-10 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600 p-4"
         >
           What technologies are you using?
         </h1>
@@ -215,6 +243,27 @@ export default function Choices() {
                   }`}
               >
                 {level}
+              </button>
+            ))}
+          </div>
+        </div>
+         {/* Add Categories Selection */}
+         <div className="mb-8">
+          <h2 className="text-2xl font-semibold mb-6 text-center">
+            Select Your Project Categories
+          </h2>
+          <div className="flex flex-wrap gap-3 justify-center">
+            {categories.map((category) => (
+              <button
+                key={category}
+                onClick={() => handleCategorySelect(category)}
+                className={`category-${category.replace(/\s+/g, '-').toLowerCase()} px-4 py-2 rounded-lg transition-all duration-300
+                  ${selectedCategories.includes(category)
+                    ? "bg-gradient-to-r from-blue-600 to-blue-500 text-white shadow-lg"
+                    : "border border-gray-700 text-gray-300 hover:border-blue-500"
+                  }`}
+              >
+                {category}
               </button>
             ))}
           </div>

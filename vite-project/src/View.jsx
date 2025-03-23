@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
+import gsap from "gsap";
 
 export default function View() {
   const [project, setProject] = useState(null);
@@ -12,20 +13,42 @@ export default function View() {
   const [verifying, setVerifying] = useState(false);
   const [verified, setVerified] = useState(false);
 
+  const animateProjectTransition = () => {
+    const container = document.querySelector('.project-container');
+    
+    // Fade out animation
+    gsap.to(container, {
+      opacity: 0,
+      y: -20,
+      duration: 0.3,
+      onComplete: () => {
+        fetchProject();
+        // Fade in animation after new project is loaded
+        gsap.to(container, {
+          opacity: 1,
+          y: 0,
+          duration: 0.5,
+          delay: 0.2
+        });
+      }
+    });
+  };
+
   const fetchProject = () => {
-    setLoading(true);
     setAccepted(false);
     setVerified(false);
     setRepoUrl("");
     const userStack = JSON.parse(localStorage.getItem("techStack")) || ["Github"];
     const userId = localStorage.getItem("user") || "12345";
     const experienceLevel = localStorage.getItem("experience") || "Intermediate";
+    const category = localStorage.getItem("selectedCategories") || "Full-Stack";
 
     axios
       .post("http://localhost:5000/api/getProject", {
         userStack,
         userId,
         experienceLevel,
+        category
       })
       .then((res) => {
         setProject(res.data.project);
@@ -98,18 +121,22 @@ export default function View() {
     <div className="max-w-5xl mx-auto p-8 bg-gradient-to-br from-gray-900 to-black text-white shadow-xl rounded-xl mt-16 border border-gray-700 relative overflow-hidden">
       <Toaster />
       
+      
       {/* Background decorative elements */}
       <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-purple-600/10 to-transparent rounded-full blur-3xl -mr-32 -mt-32"></div>
       <div className="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-blue-600/10 to-transparent rounded-full blur-3xl -ml-32 -mb-32"></div>
       
       <button
         className="absolute top-4 right-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-4 py-2 rounded-md hover:from-indigo-600 hover:to-purple-700 shadow-md transition-all duration-300"
-        onClick={fetchProject}
+        onClick={animateProjectTransition}
       >
         New Project
       </button>
-
-      <h1 className="text-3xl font-bold mt-4 bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-300">
+      <div className="project-container">
+        {/* Move all project content inside this container */}
+        {project && (
+          <>
+             <h1 className="text-3xl font-bold mt-4 bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-300">
         {project.title}
       </h1>
 
@@ -158,8 +185,8 @@ export default function View() {
           Deadline: <span className="text-white">{project.deadline}</span>
         </span>
       </div>
-
-      {/* GitHub Verification Section */}
+            
+            {/* GitHub Verification Section */}
       <div className="mt-8 p-6 bg-gradient-to-r from-gray-800/70 to-gray-900/70 rounded-lg border border-gray-700/50">
         <h2 className="text-xl font-medium text-blue-300">GitHub Repository Verification</h2>
         <div className="flex gap-2 mt-3">
@@ -197,6 +224,12 @@ export default function View() {
           Project Accepted!
         </div>
       )}
+          </>
+        )}
+      </div>
+     
+
+      
     </div>
   );
 }

@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import PostModal from "./components/community/PostModal";
 import MembersList from "./components/community/MembersList";
 import ProjectList from "./components/community/ProjectList";
+import HelpWantedList from "./components/community/HelpWantedList";
 
 const socket = io("http://localhost:5000");
 
@@ -31,6 +32,8 @@ const CommunityPage = () => {
             fetchComments(projectId);
         }
     };    
+
+    const [sharedProjects, setSharedProjects] = useState([]);
 
     // Add these state variables in your component
     const [isMember, setIsMember] = useState(false);
@@ -100,6 +103,7 @@ const CommunityPage = () => {
         fetchSubmittedProjects();
         checkMembershipStatus();
         fetchCommunityMembers(); // Add this line
+        fetchSharedProjects();
         const pathParts = window.location.pathname.split("/");
             const community = pathParts[pathParts.length - 1] || "Other";
             // console.log("Community:", community);
@@ -302,7 +306,75 @@ const CommunityPage = () => {
             setIsLoading(false);
         }
     };
+
+    const fetchSharedProjects = async () => {
+        try {
+            const pathParts = window.location.pathname.split("/");
+            const community = pathParts[pathParts.length - 1] || "Other";
+            const response = await axios.get(`http://localhost:5000/api/${community}/shared-projects`);
+            setSharedProjects(response.data);
+            console.log("shared",response.data)
+        } catch (error) {
+            console.error("Error fetching shared projects:", error);
+            toast.error("Failed to fetch shared projects");
+        }
+    };
+
+    const handleCreateSharedProject = async () => {
+        if (!selectedProject || !summary) {
+            toast.error("Please fill all fields!");
+            return;
+        }
+
+        try {
+            const user = JSON.parse(localStorage.getItem("user"));
+            const pathParts = window.location.pathname.split("/");
+            const community = pathParts[pathParts.length - 1] || "Other";
+            
+            const response = await axios.post(`http://localhost:5000/api/${community}/shared-projects`, {
+                userId: user._id,
+                projectId: selectedProject.projectId._id,
+                description: summary,
+                githubLink: selectedProject.repoUrl || "",
+                community: community
+            });
+            
+            toast.success("Project posted for collaboration!");
+            fetchSharedProjects();
+            setShowModal(false);
+            setSelectedProject(null);
+            setSummary("");
+        } catch (error) {
+            console.error("Error creating shared project:", error);
+            toast.error("Failed to create shared project");
+        }
+    };
+
+    const handleJoinSharedProject = async (projectId) => {
+        try {
+            const user = JSON.parse(localStorage.getItem("user"));
+            const pathParts = window.location.pathname.split("/");
+            const community = pathParts[pathParts.length - 1] || "Other";
+            
+            await axios.post(`http://localhost:5000/api/${community}/shared-projects/${projectId}/join`, {
+                userId: user._id
+            });
+            
+            toast.success("Successfully joined the project!");
+            fetchSharedProjects();
+        } catch (error) {
+            console.error("Error joining project:", error);
+            toast.error("Failed to join project");
+        }
+    };
     
+    const handlePublishContent = async () => {
+        if (activeTab === 'help-wanted') {
+            await handleCreateSharedProject();
+        } else {
+            await handlePublish();
+        }
+    };
 
     return (
         
@@ -362,6 +434,16 @@ const CommunityPage = () => {
                     >
                         Members
                     </button>
+                    <button
+                        className={`px-6 py-3 text-lg font-semibold transition-all ${
+                            activeTab === 'help-wanted'
+                            ? 'text-blue-400 border-b-2 border-blue-400'
+                            : 'text-gray-400 hover:text-gray-300'
+                        }`}
+                        onClick={() => setActiveTab('help-wanted')}
+                    >
+                        Help Wanted
+                    </button>
                 </div>
             </div>
             {/* Content Area */}
@@ -375,8 +457,13 @@ const CommunityPage = () => {
                     setNewComment={setNewComment}
                     handleCommentSubmit={handleCommentSubmit}
                 />
-            ) : (
+            ) : activeTab === 'members' ? (
                 <MembersList communityMembers={communityMembers} />
+            ) : (
+                <HelpWantedList 
+                    sharedProjects={sharedProjects}
+                    onJoinProject={handleJoinSharedProject}
+                />
             )}
 
             <PostModal 
@@ -388,7 +475,8 @@ const CommunityPage = () => {
                 setSummary={setSummary}
                 deployedLink={deployedLink}
                 setDeployedLink={setDeployedLink}
-                handlePublish={handlePublish}
+                handlePublish={handlePublishContent}
+                isHelpWanted={activeTab === 'help-wanted'}
             />
         </div>
     );
