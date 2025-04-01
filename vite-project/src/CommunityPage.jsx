@@ -377,107 +377,105 @@ const CommunityPage = () => {
     };
 
     return (
-        
-        <div className="max-w-5xl mx-auto p-6 bg-black text-white shadow-lg rounded-xl mt-14 relative">
-            <Toaster />
-            <div className="flex items-center justify-evenly mb-8">
-            <h1 className="text-3xl font-semibold text-center mb-6">Community Posts</h1>
-            <div className="flex justify-center mb-6 gap-4">
-    <button 
-        onClick={() => { setShowModal(true); fetchUserProjects(); }}
-        className="px-6 py-3 text-lg font-bold bg-gray-800 text-white border border-gray-600 rounded-lg transition-all
-        hover:bg-gray-700 hover:shadow-lg hover:shadow-gray-500/50 hover:scale-105"
-    >
-        Post a Project
-    </button>
-    {isMember ? (
-        <button 
-            onClick={handleLeaveCommunity}
-            disabled={isLoading}
-            className="px-2 py-1 text-lg font-bold bg-red-600 text-white border border-red-400 rounded-lg transition-all
-            hover:bg-red-700 hover:shadow-lg hover:shadow-red-500/50 hover:scale-105 disabled:opacity-50"
-        >
-            {isLoading ? "Leaving..." : "Leave Community"}
-        </button>
-    ) : (
-        <button 
-            onClick={handleJoinCommunity}
-            disabled={isLoading}
-            className="px-2 py-3 text-lg font-bold bg-blue-600 text-white border border-blue-400 rounded-lg transition-all
-            hover:bg-blue-700 hover:shadow-lg hover:shadow-blue-500/50 hover:scale-105 disabled:opacity-50"
-        >
-            {isLoading ? "Joining..." : "Join Community"}
-        </button>
-    )}
-</div>
-            </div>
-            {/* Tab Navigation */}
-            <div className="mb-8">
-                <div className="flex border-b border-gray-600">
-                    <button
-                        className={`px-6 py-3 text-lg font-semibold transition-all ${
-                            activeTab === 'posts'
-                            ? 'text-blue-400 border-b-2 border-blue-400'
-                            : 'text-gray-400 hover:text-gray-300'
-                        }`}
-                        onClick={() => setActiveTab('posts')}
-                    >
-                        Posts
-                    </button>
-                    <button
-                        className={`px-6 py-3 text-lg font-semibold transition-all ${
-                            activeTab === 'members'
-                            ? 'text-blue-400 border-b-2 border-blue-400'
-                            : 'text-gray-400 hover:text-gray-300'
-                        }`}
-                        onClick={() => setActiveTab('members')}
-                    >
-                        Members
-                    </button>
-                    <button
-                        className={`px-6 py-3 text-lg font-semibold transition-all ${
-                            activeTab === 'help-wanted'
-                            ? 'text-blue-400 border-b-2 border-blue-400'
-                            : 'text-gray-400 hover:text-gray-300'
-                        }`}
-                        onClick={() => setActiveTab('help-wanted')}
-                    >
-                        Help Wanted
-                    </button>
+        <div className="min-h-screen bg-black pt-20 px-4">
+            <div className="max-w-6xl mx-auto">
+                <Toaster />
+                
+                <div className="bg-gradient-to-br from-black to-gray-900 rounded-xl border border-white/10 p-8 backdrop-blur-xl">
+                    <div className="flex flex-col md:flex-row items-center justify-between gap-6 mb-12">
+                        <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-[#00ff9d]">
+                            Community Hub
+                        </h1>
+                        
+                        <div className="flex gap-4">
+                            <button 
+                              onClick={() => { setShowModal(true); fetchUserProjects(); }}
+                              className="px-6 py-3 bg-[#00ff9d] text-black rounded-lg font-medium hover:bg-[#00cc7d] transition-all duration-300 flex items-center gap-2"
+                            >
+                              <span className="text-lg">Post Project</span>
+                            </button>
+                            
+                            {isMember ? (
+                              <button 
+                                onClick={handleLeaveCommunity}
+                                disabled={isLoading}
+                                className="px-6 py-3 border-2 border-red-500 text-red-500 rounded-lg font-medium
+                                  hover:bg-red-500 hover:text-white transition-all duration-300 disabled:opacity-50"
+                              >
+                                {isLoading ? "Leaving..." : "Leave Community"}
+                              </button>
+                            ) : (
+                              <button 
+                                onClick={handleJoinCommunity}
+                                disabled={isLoading}
+                                className="px-6 py-3 border-2 border-[#00ff9d] text-[#00ff9d] rounded-lg font-medium
+                                  hover:bg-[#00ff9d] hover:text-black transition-all duration-300 disabled:opacity-50"
+                              >
+                                {isLoading ? "Joining..." : "Join Community"}
+                              </button>
+                            )}
+                        </div>
+                    </div>
+                    
+                    {/* Enhanced Tab Navigation */}
+                    <div className="mb-12">
+                      <div className="flex gap-2 p-1 bg-white/5 rounded-lg">
+                        {[
+                          { id: 'posts', label: 'Posts' },
+                          { id: 'members', label: 'Members' },
+                          { id: 'help-wanted', label: 'Help Wanted' }
+                        ].map((tab) => (
+                          <button
+                            key={tab.id}
+                            onClick={() => setActiveTab(tab.id)}
+                            className={`flex-1 py-3 px-6 rounded-lg font-medium transition-all duration-300 ${
+                              activeTab === tab.id
+                                ? 'bg-[#00ff9d] text-black'
+                                : 'text-gray-400 hover:text-white hover:bg-white/5'
+                            }`}
+                          >
+                            {tab.label}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                    
+                    {/* Content Area with consistent styling */}
+                    <div className="bg-black/20 rounded-xl p-6">
+                      {activeTab === 'posts' ? (
+                        <ProjectList 
+                          submittedProjects={submittedProjects}
+                          expandedProject={expandedProject}
+                          toggleExpand={toggleExpand}
+                          comments={comments}
+                          newComment={newComment}
+                          setNewComment={setNewComment}
+                          handleCommentSubmit={handleCommentSubmit}
+                        />
+                      ) : activeTab === 'members' ? (
+                        <MembersList communityMembers={communityMembers} />
+                      ) : (
+                        <HelpWantedList 
+                          sharedProjects={sharedProjects}
+                          onJoinProject={handleJoinSharedProject}
+                        />
+                      )}
+                    </div>
                 </div>
+                
+                <PostModal 
+                  showModal={showModal}
+                  setShowModal={setShowModal}
+                  userProjects={userProjects}
+                  handleProjectSelect={handleProjectSelect}
+                  summary={summary}
+                  setSummary={setSummary}
+                  deployedLink={deployedLink}
+                  setDeployedLink={setDeployedLink}
+                  handlePublish={handlePublishContent}
+                  isHelpWanted={activeTab === 'help-wanted'}
+                />
             </div>
-            {/* Content Area */}
-            {activeTab === 'posts' ? (
-                <ProjectList 
-                    submittedProjects={submittedProjects}
-                    expandedProject={expandedProject}
-                    toggleExpand={toggleExpand}
-                    comments={comments}
-                    newComment={newComment}
-                    setNewComment={setNewComment}
-                    handleCommentSubmit={handleCommentSubmit}
-                />
-            ) : activeTab === 'members' ? (
-                <MembersList communityMembers={communityMembers} />
-            ) : (
-                <HelpWantedList 
-                    sharedProjects={sharedProjects}
-                    onJoinProject={handleJoinSharedProject}
-                />
-            )}
-
-            <PostModal 
-                showModal={showModal}
-                setShowModal={setShowModal}
-                userProjects={userProjects}
-                handleProjectSelect={handleProjectSelect}
-                summary={summary}
-                setSummary={setSummary}
-                deployedLink={deployedLink}
-                setDeployedLink={setDeployedLink}
-                handlePublish={handlePublishContent}
-                isHelpWanted={activeTab === 'help-wanted'}
-            />
         </div>
     );
 };

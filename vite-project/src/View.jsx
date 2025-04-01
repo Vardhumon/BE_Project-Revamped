@@ -118,118 +118,119 @@ export default function View() {
   if (error) return <p className="text-center text-red-500 py-8 text-lg">Error: {error}</p>;
 
   return (
-    <div className="max-w-5xl mx-auto p-8 bg-gradient-to-br from-gray-900 to-black text-white shadow-xl rounded-xl mt-16 border border-gray-700 relative overflow-hidden">
-      <Toaster />
-      
-      
-      {/* Background decorative elements */}
-      <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-purple-600/10 to-transparent rounded-full blur-3xl -mr-32 -mt-32"></div>
-      <div className="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-blue-600/10 to-transparent rounded-full blur-3xl -ml-32 -mb-32"></div>
-      
-      <button
-        className="absolute top-4 right-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-4 py-2 rounded-md hover:from-indigo-600 hover:to-purple-700 shadow-md transition-all duration-300"
-        onClick={animateProjectTransition}
-      >
-        New Project
-      </button>
-      <div className="project-container">
-        {/* Move all project content inside this container */}
+    <div className="min-h-screen bg-black pt-20 px-4">
+      <div className="max-w-5xl mx-auto p-8 bg-gradient-to-br from-black to-gray-900 text-white shadow-2xl rounded-2xl border border-white/10 relative overflow-hidden backdrop-blur-xl">
+        <Toaster />
+        
+        {/* Enhanced decorative elements */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-[#00ff9d]/5 rounded-full blur-3xl -mr-48 -mt-48"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#00ff9d]/5 rounded-full blur-3xl -ml-48 -mb-48"></div>
+        
+        <button
+          className="absolute top-4 right-4 px-6 py-2.5 bg-black border border-[#00ff9d]/20 text-[#00ff9d] rounded-lg hover:bg-[#00ff9d]/10 transition-all duration-300 flex items-center gap-2 shadow-lg shadow-[#00ff9d]/5"
+          onClick={animateProjectTransition}
+        >
+          <span className="w-2 h-2 bg-[#00ff9d] rounded-full animate-pulse"></span>
+          New Project
+        </button>
+      <div className="project-container relative z-10">
         {project && (
           <>
-             <h1 className="text-3xl font-bold mt-4 bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-300">
-        {project.title}
-      </h1>
+            <h1 className="text-4xl font-bold mt-4 bg-clip-text text-transparent bg-gradient-to-r from-white to-[#00ff9d]">
+              {project.title}
+            </h1>
 
-      <p className="text-gray-300 mt-2 text-lg">
-        {project.description}
-      </p>
+            <p className="text-gray-300 mt-4 text-lg leading-relaxed">
+              {project.description}
+            </p>
 
-      <div className="mt-6">
-        <h2 className="text-xl font-medium text-blue-300">Tech Stack:</h2>
-        <div className="flex flex-wrap gap-2 mt-2">
-          {project.techStack.map((tech, index) => (
-            <span
-              key={index}
-              className="bg-gradient-to-r from-blue-900 to-indigo-900 text-white px-4 py-1.5 text-sm rounded-full border border-blue-700/50 shadow-md"
-            >
-              {tech}
-            </span>
-          ))}
-        </div>
-      </div>
-
-      <div className="mt-8">
-        <h2 className="text-xl font-medium text-blue-300">Project Steps:</h2>
-        <div className="space-y-4 mt-4">
-          {project.steps.map((step, index) => (
-            <div
-              key={index}
-              className="p-5 border-l-4 border-indigo-500 bg-gradient-to-r from-gray-800 to-gray-900 rounded-md shadow-md"
-            >
-              <h3 className="font-semibold text-indigo-300">{step.step}</h3>
-              <ul className="list-disc list-inside text-gray-300 mt-2 pl-4">
-                {step.subSteps.map((subStep, i) => (
-                  <li key={i} className="mb-1">{subStep}</li>
+            <div className="mt-8">
+              <h2 className="text-xl font-medium text-[#00ff9d]">Tech Stack</h2>
+              <div className="flex flex-wrap gap-3 mt-4">
+                {project.techStack.map((tech, index) => (
+                  <span
+                    key={index}
+                    className="px-4 py-2 bg-black border border-[#00ff9d]/20 text-white rounded-lg hover:bg-[#00ff9d]/5 transition-all duration-300"
+                  >
+                    {tech}
+                  </span>
                 ))}
-              </ul>
+              </div>
             </div>
-          ))}
-        </div>
-      </div>
 
-      <div className="mt-8 flex justify-between items-center text-gray-300">
-        <span className="bg-gradient-to-r from-gray-800 to-gray-700 px-4 py-1.5 text-sm rounded-full shadow-inner">
-          {project.tag}
-        </span>
-        <span className="font-medium text-indigo-300">
-          Deadline: <span className="text-white">{project.deadline}</span>
-        </span>
-      </div>
-            
+            <div className="mt-12">
+              <h2 className="text-xl font-medium text-[#00ff9d]">Project Steps</h2>
+              <div className="space-y-6 mt-6">
+                {project.steps.map((step, index) => (
+                  <div
+                    key={index}
+                    className="p-6 border border-white/10 rounded-xl bg-black/50 backdrop-blur-xl hover:border-[#00ff9d]/30 transition-all duration-300"
+                  >
+                    <h3 className="font-semibold text-[#00ff9d] text-lg">{step.step}</h3>
+                    <ul className="space-y-3 mt-4 text-gray-300">
+                      {step.subSteps.map((subStep, i) => (
+                        <li key={i} className="flex items-start gap-3">
+                          <span className="w-2 h-2 mt-2 bg-[#00ff9d] rounded-full"></span>
+                          <span>{subStep}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="mt-12 flex items-center justify-between">
+              <span className="px-4 py-2 bg-black/50 border border-white/10 rounded-lg text-[#00ff9d]">
+                {project.tag}
+              </span>
+              <span className="text-gray-300">
+                Deadline: <span className="text-[#00ff9d]">{project.deadline}</span>
+              </span>
+            </div>
+
             {/* GitHub Verification Section */}
-      <div className="mt-8 p-6 bg-gradient-to-r from-gray-800/70 to-gray-900/70 rounded-lg border border-gray-700/50">
-        <h2 className="text-xl font-medium text-blue-300">GitHub Repository Verification</h2>
-        <div className="flex gap-2 mt-3">
-          <input
-            type="text"
-            placeholder="Enter GitHub Repository URL"
-            value={repoUrl}
-            onChange={(e) => setRepoUrl(e.target.value)}
-            className="w-full p-3 bg-gray-800/80 text-white rounded-md border border-gray-700 focus:outline-none focus:border-indigo-500 transition-colors"
-          />
-          <button
-            className={`px-4 py-2 rounded-md shadow-md ${
-              verified 
-                ? "bg-gradient-to-r from-green-500 to-emerald-600" 
-                : "bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700"
-            } text-white transition-all duration-300`}
-            onClick={verifyGitHubRepo}
-            disabled={verifying || verified}
-          >
-            {verified ? "Verified" : verifying ? "Verifying..." : "Verify"}
-          </button>
-        </div>
-      </div>
+            <div className="mt-12 p-8 border border-white/10 rounded-xl bg-black/50 backdrop-blur-xl">
+              <h2 className="text-xl font-medium text-[#00ff9d] mb-6">GitHub Repository Verification</h2>
+              <div className="flex gap-4">
+                <input
+                  type="text"
+                  placeholder="Enter GitHub Repository URL"
+                  value={repoUrl}
+                  onChange={(e) => setRepoUrl(e.target.value)}
+                  className="flex-1 px-4 py-3 bg-black border border-white/10 rounded-lg text-white focus:outline-none focus:border-[#00ff9d] transition-colors"
+                />
+                <button
+                  onClick={verifyGitHubRepo}
+                  disabled={verifying || verified}
+                  className={`px-6 py-3 rounded-lg transition-all duration-300 ${
+                    verified 
+                      ? "bg-[#00ff9d] text-black"
+                      : "border border-[#00ff9d] text-[#00ff9d] hover:bg-[#00ff9d]/10"
+                  }`}
+                >
+                  {verified ? "Verified ✓" : verifying ? "Verifying..." : "Verify"}
+                </button>
+              </div>
+            </div>
 
-      {!accepted ? (
-        <button
-          className="mt-8 w-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-4 py-3 rounded-md hover:from-indigo-600 hover:to-purple-700 font-medium shadow-lg transition-all duration-300 text-lg"
-          onClick={acceptProject}
-          disabled={accepting}
-        >
-          {accepting ? "Accepting..." : "Accept Project"}
-        </button>
-      ) : (
-        <div className="mt-8 w-full bg-gradient-to-r from-green-500 to-emerald-600 text-white px-4 py-3 rounded-md font-medium shadow-lg text-center text-lg">
-          Project Accepted!
-        </div>
-      )}
+            <button
+              onClick={acceptProject}
+              disabled={accepting || !verified}
+              className={`mt-12 w-full py-4 rounded-lg text-lg font-medium transition-all duration-300 ${
+                accepted
+                  ? "bg-[#00ff9d] text-black"
+                  : !verified
+                  ? "bg-gray-800 text-gray-400 cursor-not-allowed"
+                  : "bg-black border border-[#00ff9d] text-[#00ff9d] hover:bg-[#00ff9d] hover:text-black"
+              }`}
+            >
+              {accepting ? "Accepting..." : accepted ? "Project Accepted!" : "Accept Project"}
+            </button>
           </>
         )}
       </div>
-     
-
-      
     </div>
-  );
+  </div>
+);
 }

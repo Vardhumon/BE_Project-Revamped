@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { motion } from "framer-motion";
+import { User, Mail, Lock, Code2, Award, ArrowLeft } from 'lucide-react';
 
 const techOptions = [
   "React", "Node.js", "MongoDB", "Express", "Python", "Java", "Machine Learning",
@@ -12,20 +13,53 @@ const experienceLevels = ["Beginner", "Intermediate", "Expert"];
 
 const Signup = () => {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
   const [formData, setFormData] = useState({
-    name: "", email: "", password: "", techStack: [], experienceLevel: "",
+    name: "", 
+    email: "", 
+    password: "", 
+    techStack: [], 
+    experienceLevel: "",
   });
 
-  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
-  const handleTechChange = (tech) => setFormData((prev) => ({
-    ...prev,
-    techStack: prev.techStack.includes(tech)
-      ? prev.techStack.filter((t) => t !== tech)
-      : [...prev.techStack, tech],
-  }));
-  const handleExperienceChange = (level) => setFormData({ ...formData, experienceLevel: level });
+  const handleChange = (e) => {
+    setError("");
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleTechChange = (tech) => {
+    setFormData((prev) => ({
+      ...prev,
+      techStack: prev.techStack.includes(tech)
+        ? prev.techStack.filter((t) => t !== tech)
+        : [...prev.techStack, tech],
+    }));
+  };
+
+  const handleExperienceChange = (level) => {
+    setFormData({ ...formData, experienceLevel: level });
+  };
 
   const handleSubmit = async () => {
+    if (!formData.name || !formData.email || !formData.password) {
+      setError("Please fill in all required fields");
+      return;
+    }
+
+    if (formData.techStack.length === 0) {
+      setError("Please select at least one technology");
+      return;
+    }
+
+    if (!formData.experienceLevel) {
+      setError("Please select your experience level");
+      return;
+    }
+
+    setIsLoading(true);
+    setError("");
+
     try {
       await axios.post("http://localhost:5000/api/signup", {
         ...formData,
@@ -33,147 +67,182 @@ const Signup = () => {
       });
       navigate("/login");
     } catch (err) {
-      console.error("Signup failed:", err.response?.data?.message || "Server error");
+      setError(err.response?.data?.message || "Signup failed. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <motion.div 
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.8 }}
-      className="flex h-screen w-screen bg-black text-white mt-10"
-    >
-      {/* Left Section - Form */}
+    <div className="min-h-screen bg-black text-white pt-20 px-4">
       <motion.div 
-        initial={{ opacity: 0, x: -20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.8, delay: 0.2 }}
-        className="w-4/5 p-10 overflow-y-auto flex flex-col items-center overflow-y-hidden"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="max-w-6xl mx-auto"
       >
-        <motion.div 
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="w-3/5"
-        >
-          <h2 className="text-4xl font-semibold mb-6">Sign Up</h2>
-        </motion.div>
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.98 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.7, delay: 0.5 }}
-          className="space-y-5 w-3/5"
-        >
-          {/* Name */}
-          <motion.input 
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.6 }}
-            type="text" name="name" placeholder="Your Name" value={formData.name} onChange={handleChange} className="w-3/4 p-3 bg-white/10 border border-white/30 rounded-lg focus:ring-4 focus:ring-white text-lg" 
-          />
-          {/* Email */}
-          <motion.input 
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.7 }}
-            type="email" name="email" placeholder="Your Email" value={formData.email} onChange={handleChange} className="w-3/4 p-3 bg-white/10 border border-white/30 rounded-lg focus:ring-4 focus:ring-white text-lg" 
-          />
-          {/* Password */}
-          <motion.input 
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.8 }}
-            type="password" name="password" placeholder="Create Password" value={formData.password} onChange={handleChange} className="w-3/4 p-3 bg-white/10 border border-white/30 rounded-lg focus:ring-4 focus:ring-white text-lg" 
-          />
-          {/* Tech Stack */}
-          <motion.h3 
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.9 }}
-            className="text-xl font-semibold mb-6"
-          >
-            Tech Stack
-          </motion.h3>
+        <div className=" rounded-2xl border border-white/10 p-8 backdrop-blur-xl">
           <motion.div 
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 1.0 }}
-            className="flex flex-wrap gap-2"
+            className="flex items-center gap-4 mb-8"
           >
-            {techOptions.map((tech) => (
-              <button key={tech} onClick={() => handleTechChange(tech)} className={`px-4 py-2 rounded-lg border transition duration-300 text-lg ${formData.techStack.includes(tech) ? "bg-white text-black" : "bg-black text-white border-white hover:bg-white hover:text-black"}`}>
-                {tech}
-              </button>
-            ))}
-          </motion.div>
-          <motion.h3 
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 1.1 }}
-            className="text-xl font-semibold mb-6"
-          >
-            Experience Level
-          </motion.h3>
-          {/* Experience Level */}
-          <motion.div 
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 1.2 }}
-            className="flex gap-4"
-          >
-            {experienceLevels.map((level) => (
-              <button key={level} onClick={() => handleExperienceChange(level)} className={`px-6 py-3 text-lg border rounded-lg transition duration-300 ${formData.experienceLevel === level ? "bg-white text-black" : "bg-black text-white border-white hover:bg-white hover:text-black"}`}>
-                {level}
-              </button>
-            ))}
-          </motion.div>
-          {/* Submit Button */}
-          <motion.div 
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 1.3 }}
-            className="flex items-center gap-4"
-          >
-            <motion.button
-              onClick={handleSubmit}
-              whileHover={{ scale: 1.05, boxShadow: "0px 0px 15px rgba(255, 255, 255, 0.8)" }}
-              whileTap={{ scale: 0.95 }}
-              className="w-1/3 bg-white text-black hover:bg-gray-300 transition py-3 text-xl rounded-lg font-semibold self-center"
+            <button 
+              onClick={() => navigate("/login")}
+              className="p-2 hover:bg-white/5 rounded-lg transition-colors"
             >
-              Sign Up
-            </motion.button>
-            <p className="mt-6 text-gray-400">Already registered? <button onClick={() => navigate("/login")} className="text-white hover:underline">Login here</button></p>
+              <ArrowLeft className="w-6 h-6 text-[#00ff9d]" />
+            </button>
+            <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-[#00ff9d]">
+              Create Account
+            </h1>
           </motion.div>
-        </motion.div>
-        <div className="w-3/5 mb-6"></div>
-      </motion.div>
 
-      {/* Right Section - Animation */}
-      <motion.div 
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1, delay: 0.3 }}
-        className="w-1/5 flex justify-center items-center relative overflow-hidden"
-      >
-        {[...Array(10)].map((_, i) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, scale: 0.5, y: 50 }}
-            animate={{ opacity: 0.7, scale: 1, y: -50 }}
-            transition={{ duration: 6, repeat: Infinity, repeatType: "mirror", delay: i * 0.8 }}
-            className="absolute bg-white rounded-full blur-3xl"
-            style={{
-              width: `${30 + i * 30}px`,
-              height: `${30 + i * 30}px`,
-              top: `${Math.random() * 100}%`,
-              left: `${50 + Math.random() * 50}%`,
-              opacity: 0.3,
-            }}
-          />
-        ))}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Form Section */}
+            <motion.div 
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="space-y-6"
+            >
+              {/* Basic Info */}
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-400 mb-2">Name</label>
+                  <div className="relative">
+                    <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                    <input
+                      type="text"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      className="w-full pl-12 pr-4 py-3 bg-black/30 border border-white/10 rounded-xl focus:border-[#00ff9d] focus:ring-1 focus:ring-[#00ff9d] transition-colors"
+                      placeholder="Enter your name"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-400 mb-2">Email</label>
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                    <input
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      className="w-full pl-12 pr-4 py-3 bg-black/30 border border-white/10 rounded-xl focus:border-[#00ff9d] focus:ring-1 focus:ring-[#00ff9d] transition-colors"
+                      placeholder="Enter your email"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-400 mb-2">Password</label>
+                  <div className="relative">
+                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                    <input
+                      type="password"
+                      name="password"
+                      value={formData.password}
+                      onChange={handleChange}
+                      className="w-full pl-12 pr-4 py-3 bg-black/30 border border-white/10 rounded-xl focus:border-[#00ff9d] focus:ring-1 focus:ring-[#00ff9d] transition-colors"
+                      placeholder="Create a password"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Experience Level */}
+              <div>
+                <div className="flex items-center gap-2 mb-4">
+                  <Award className="w-5 h-5 text-[#00ff9d]" />
+                  <h3 className="text-lg font-medium text-white">Experience Level</h3>
+                </div>
+                <div className="flex flex-wrap gap-3">
+                  {experienceLevels.map((level) => (
+                    <button
+                      key={level}
+                      onClick={() => handleExperienceChange(level)}
+                      className={`px-4 py-2 rounded-lg border transition-all duration-300 ${
+                        formData.experienceLevel === level
+                          ? "bg-[#00ff9d] text-black border-[#00ff9d]"
+                          : "border-white/10 hover:border-[#00ff9d]/50"
+                      }`}
+                    >
+                      {level}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Tech Stack Section */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="space-y-6"
+            >
+              <div className="flex items-center gap-2 mb-4">
+                <Code2 className="w-5 h-5 text-[#00ff9d]" />
+                <h3 className="text-lg font-medium text-white">Select Your Tech Stack</h3>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {techOptions.map((tech) => (
+                  <button
+                    key={tech}
+                    onClick={() => handleTechChange(tech)}
+                    className={`px-4 py-2 rounded-lg border transition-all duration-300 ${
+                      formData.techStack.includes(tech)
+                        ? "bg-[#00ff9d] text-black border-[#00ff9d]"
+                        : "border-white/10 hover:border-[#00ff9d]/50"
+                    }`}
+                  >
+                    {tech}
+                  </button>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+
+          {error && (
+            <motion.p 
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-red-500 mt-6"
+            >
+              {error}
+            </motion.p>
+          )}
+
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mt-8 flex items-center gap-4"
+          >
+            <button
+              onClick={handleSubmit}
+              disabled={isLoading}
+              className="px-8 py-3 bg-[#00ff9d] text-black rounded-xl font-medium hover:bg-[#00ff9d]/90 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+            >
+              {isLoading ? (
+                <div className="w-5 h-5 border-2 border-black border-t-transparent rounded-full animate-spin" />
+              ) : (
+                "Create Account"
+              )}
+            </button>
+            <p className="text-gray-400">
+              Already have an account?{" "}
+              <button 
+                onClick={() => navigate("/login")}
+                className="text-[#00ff9d] hover:text-[#00ff9d]/80 transition-colors"
+              >
+                Sign in
+              </button>
+            </p>
+          </motion.div>
+        </div>
       </motion.div>
-    </motion.div>
+    </div>
   );
 };
 

@@ -1,51 +1,86 @@
 import React from 'react';
+import { Save } from 'lucide-react';
 
 export default function ProfileForm({ userInfo, setUserInfo, handleSave }) {
   return (
-    <div className="mt-6 space-y-4 bg-gray-900/50 p-6 rounded-xl backdrop-blur-sm border border-gray-800">
-      <div>
-        <label className="block text-sm font-medium text-gray-400 mb-1.5">Name</label>
-        <input
-          type="text"
-          placeholder="Your name"
-          value={userInfo.name}
-          onChange={(e) => setUserInfo({ ...userInfo, name: e.target.value })}
-          className="w-full p-3 bg-gray-800/70 text-white rounded-lg border border-gray-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all duration-300"
-        />
+    <div className="mt-6 space-y-6 bg-gray-900/50 p-8 rounded-xl backdrop-blur-sm border border-gray-800">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label className="block text-sm font-medium text-gray-400 mb-2">Name</label>
+          <input
+            type="text"
+            placeholder="Your name"
+            value={userInfo.name}
+            onChange={(e) => setUserInfo({ ...userInfo, name: e.target.value })}
+            className="w-full p-3 bg-black/70 text-white rounded-xl border border-gray-700 focus:border-[#00ff9d] focus:ring-1 focus:ring-[#00ff9d] transition-all duration-300"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-400 mb-2">Experience Level</label>
+          <select
+            value={userInfo.experienceLevel}
+            onChange={(e) => setUserInfo({ ...userInfo, experienceLevel: e.target.value })}
+            className="w-full p-3 bg-black/70 text-white rounded-xl border border-gray-700 focus:border-[#00ff9d] focus:ring-1 focus:ring-[#00ff9d] transition-all duration-300"
+          >
+            <option value="">Select Level</option>
+            <option value="Beginner">Beginner</option>
+            <option value="Intermediate">Intermediate</option>
+            <option value="Advanced">Advanced</option>
+            <option value="Expert">Expert</option>
+          </select>
+        </div>
+
+        <div className="md:col-span-2">
+          <label className="block text-sm font-medium text-gray-400 mb-2">Bio</label>
+          <textarea
+            placeholder="Tell us about yourself"
+            value={userInfo.bio}
+            onChange={(e) => setUserInfo({ ...userInfo, bio: e.target.value })}
+            className="w-full p-3 bg-black/70 text-white rounded-xl border border-gray-700 focus:border-[#00ff9d] focus:ring-1 focus:ring-[#00ff9d] transition-all duration-300 min-h-[120px] resize-none"
+          />
+        </div>
+
+        <div className="md:col-span-2">
+          <label className="block text-sm font-medium text-gray-400 mb-2">Tech Stack</label>
+          <input
+            type="text"
+            placeholder="React, Node.js, MongoDB, etc."
+            value={userInfo.techStack && Array.isArray(userInfo.techStack) ? userInfo.techStack.join(", ") : ""}
+            onChange={(e) => setUserInfo({ ...userInfo, techStack: e.target.value.split(",").map(tech => tech.trim()) })}
+            className="w-full p-3 bg-black/70 text-white rounded-xl border border-gray-700 focus:border-[#00ff9d] focus:ring-1 focus:ring-[#00ff9d] transition-all duration-300"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-400 mb-2">Education</label>
+          <input
+            type="text"
+            placeholder="Your educational background"
+            value={userInfo.education}
+            onChange={(e) => setUserInfo({ ...userInfo, education: e.target.value })}
+            className="w-full p-3 bg-black/70 text-white rounded-xl border border-gray-700 focus:border-[#00ff9d] focus:ring-1 focus:ring-[#00ff9d] transition-all duration-300"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-400 mb-2">Hobbies</label>
+          <input
+            type="text"
+            placeholder="What do you enjoy outside of coding?"
+            value={userInfo.hobbies}
+            onChange={(e) => setUserInfo({ ...userInfo, hobbies: e.target.value })}
+            className="w-full p-3 bg-black/70 text-white rounded-xl border border-gray-700 focus:border-[#00ff9d] focus:ring-1 focus:ring-[#00ff9d] transition-all duration-300"
+          />
+        </div>
       </div>
-      
-      {/* Similar pattern for other fields */}
-      <div>
-        <label className="block text-sm font-medium text-gray-400 mb-1.5">Bio</label>
-        <textarea
-          placeholder="Tell us about yourself"
-          value={userInfo.bio}
-          onChange={(e) => setUserInfo({ ...userInfo, bio: e.target.value })}
-          className="w-full p-3 bg-gray-800/70 text-white rounded-lg border border-gray-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all duration-300 min-h-[100px]"
-        />
-      </div>
-      
-      <div>
-        <label className="block text-sm font-medium text-gray-400 mb-1.5">Tech Stack</label>
-        <input
-          type="text"
-          placeholder="React, Node.js, MongoDB, etc."
-          value={userInfo.techStack && Array.isArray(userInfo.techStack) ? userInfo.techStack.join(", ") : ""}
-          onChange={(e) => setUserInfo({ ...userInfo, techStack: e.target.value.split(", ") })}
-          className="w-full p-3 bg-gray-800/70 text-white rounded-lg border border-gray-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all duration-300"
-        />
-      </div>
-      
-      {/* Add other form fields here */}
-      
+
       <div className="pt-4">
         <button 
-          onClick={handleSave} 
-          className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 px-6 py-3 rounded-lg text-white font-medium shadow-lg transition-all duration-300 flex items-center gap-2"
+          onClick={handleSave}
+          className="px-6 py-3 bg-[#00ff9d] text-black rounded-xl font-medium hover:bg-[#00ff9d]/90 transition-all duration-300 flex items-center gap-2"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-          </svg>
+          <Save className="w-5 h-5" />
           Save Changes
         </button>
       </div>

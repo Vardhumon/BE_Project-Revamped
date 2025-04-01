@@ -1,35 +1,70 @@
-import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
-import { FaUserCircle } from "react-icons/fa";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { Code2, Users, Plus, User, LogOut } from 'lucide-react';
 
-export default function Navbar({ user }) {
-  const navigate = useNavigate();
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    // Navbar appears after a short delay
-    const timer = setTimeout(() => setIsVisible(true), 1500);
-    return () => clearTimeout(timer);
-  }, []);
+const Navbar = ({ user, onLogout }) => {
+  const [hoveredItem, setHoveredItem] = useState(null);
 
   return (
-    <motion.nav
-      className="fixed top-0 left-0 w-full px-6 py-4 flex justify-between items-center z-50 
-                 bg-black/30 backdrop-blur-md shadow-md border-b border-white/10 mb-5"
+    <motion.nav 
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="fixed top-0 w-full z-50 bg-black/60 backdrop-blur-xl border-b border-white/5"
     >
-      {/* Logo */}
-      <Link to="/" className="text-xl font-bold text-white hover:text-gray-300 transition-all">
-        CodeWorkedPark
-      </Link>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-20">
+          <Link 
+            to="/" 
+            className="flex items-center space-x-3 group"
+          >
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="relative"
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-[#00ff9d] to-[#00cc7d] blur-sm opacity-30 group-hover:opacity-50 transition-opacity" />
+              <span className="relative text-2xl font-bold font-['Space_Grotesk'] text-white">
+                CodeWorked
+              </span>
+            </motion.div>
+          </Link>
 
-      {/* User Icon */}
-      {user && (
-        <FaUserCircle
-          className="text-3xl cursor-pointer text-white hover:text-gray-300 transition-all"
-          onClick={() => navigate("/profile")}
-        />
-      )}
+          <div className="flex items-center space-x-8">
+            {[
+              { path: '/create-project', label: 'Create', icon: Plus },
+              { path: '/community', label: 'Community', icon: Users },
+              { path: '/profile', label: 'Profile', icon: User }
+            ].map((item) => (
+              <Link
+                key={item.path}
+                to={item.path}
+                className="flex items-center space-x-2 text-gray-300 hover:text-[#00ff9d] transition-colors duration-300"
+                onMouseEnter={() => setHoveredItem(item.label)}
+                onMouseLeave={() => setHoveredItem(null)}
+              >
+                <item.icon 
+                  className={`w-4 h-4 transition-all duration-300 ${
+                    hoveredItem === item.label ? 'text-[#00ff9d]' : 'text-gray-400'
+                  }`}
+                />
+                <span className="text-sm font-medium">{item.label}</span>
+              </Link>
+            ))}
+            <motion.button 
+              onClick={onLogout}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="flex items-center space-x-2 px-4 py-2 rounded-lg border border-white/10 hover:border-[#00ff9d]/50 hover:bg-[#00ff9d]/10 transition-all duration-300"
+            >
+              <LogOut className="w-4 h-4" />
+              <span className="text-sm font-medium">Logout</span>
+            </motion.button>
+          </div>
+        </div>
+      </div>
     </motion.nav>
   );
-}
+};
+
+export default Navbar;
