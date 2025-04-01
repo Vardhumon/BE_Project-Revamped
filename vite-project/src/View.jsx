@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import gsap from "gsap";
+import { motion, AnimatePresence } from 'framer-motion';
+
 
 export default function View() {
   const [project, setProject] = useState(null);
@@ -119,6 +121,28 @@ export default function View() {
 
   return (
     <div className="min-h-screen bg-black pt-20 px-4">
+      <div className="absolute inset-0 bg-gradient-to-b from-[#00ff9d]/10 to-transparent">
+          {/* Add animated particles here */}
+          {Array.from({ length: 20 }).map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-1 h-1 bg-[#00ff9d]/30 rounded-full"
+              animate={{
+                y: [-20, 20],
+                opacity: [0.2, 0.5, 0.2],
+              }}
+              transition={{
+                duration: Math.random() * 2 + 2,
+                repeat: Infinity,
+                ease: "linear",
+              }}
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+              }}
+            />
+          ))}
+        </div>
       <div className="max-w-5xl mx-auto p-8 bg-gradient-to-br from-black to-gray-900 text-white shadow-2xl rounded-2xl border border-white/10 relative overflow-hidden backdrop-blur-xl">
         <Toaster />
         

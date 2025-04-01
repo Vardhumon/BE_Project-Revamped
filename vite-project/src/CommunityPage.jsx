@@ -7,6 +7,8 @@ import PostModal from "./components/community/PostModal";
 import MembersList from "./components/community/MembersList";
 import ProjectList from "./components/community/ProjectList";
 import HelpWantedList from "./components/community/HelpWantedList";
+import { Star } from 'lucide-react';
+
 
 const socket = io("http://localhost:5000");
 
@@ -38,6 +40,7 @@ const CommunityPage = () => {
     // Add these state variables in your component
     const [isMember, setIsMember] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [starredProjects, setStarredProjects] = useState({});
     
     // Add this function in your component
     const checkMembershipStatus = async () => {
@@ -377,103 +380,150 @@ const CommunityPage = () => {
     };
 
     return (
-        <div className="min-h-screen bg-black pt-20 px-4">
-            <div className="max-w-6xl mx-auto">
-                <Toaster />
+        <div className="min-h-screen bg-black pt-20 px-4 relative overflow-hidden">
+          <style>
+          {`
+            ::-webkit-scrollbar {
+              width: 6px;
+            }
+            ::-webkit-scrollbar-track {
+              background: rgba(255, 255, 255, 0.1);
+              border-radius: 10px;
+            }
+            ::-webkit-scrollbar-thumb {
+              background: #00ff9d;
+              border-radius: 10px;
+            }
+            ::-webkit-scrollbar-thumb:hover {
+              background: #00cc7d;
+            }
+          `}
+        </style>
+        
+            {/* Enhanced Background Elements */}
+            <div className="absolute inset-0 bg-gradient-to-b from-[#00ff9d]/10 to-transparent">
+          {/* Add animated particles here */}
+          {Array.from({ length: 20 }).map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-1 h-1 bg-[#00ff9d]/30 rounded-full"
+              animate={{
+                y: [-20, 20],
+                opacity: [0.2, 0.5, 0.2],
+              }}
+              transition={{
+                duration: Math.random() * 2 + 2,
+                repeat: Infinity,
+                ease: "linear",
+              }}
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+              }}
+            />
+          ))}
+        </div>
+        
+            <div className="max-w-7xl mx-auto relative z-10">
+                <Toaster position="bottom-center"
+  reverseOrder={false} />
                 
-                <div className="bg-gradient-to-br from-black to-gray-900 rounded-xl border border-white/10 p-8 backdrop-blur-xl">
+                <div className="backdrop-blur-xl bg-white/5 rounded-xl border border-white/10 p-8 shadow-[0_8px_32px_rgba(0,0,0,0.37)]">
                     <div className="flex flex-col md:flex-row items-center justify-between gap-6 mb-12">
-                        <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-[#00ff9d]">
+                        <h1 className="text-4xl font-bold text-white">
                             Community Hub
                         </h1>
                         
                         <div className="flex gap-4">
                             <button 
-                              onClick={() => { setShowModal(true); fetchUserProjects(); }}
-                              className="px-6 py-3 bg-[#00ff9d] text-black rounded-lg font-medium hover:bg-[#00cc7d] transition-all duration-300 flex items-center gap-2"
+                                onClick={() => { setShowModal(true); fetchUserProjects(); }}
+                                className="px-6 py-3 bg-white/10 backdrop-blur-lg border border-white/20 text-white rounded-lg font-medium 
+                                    hover:bg-white/20 transition-all duration-300 flex items-center gap-2"
                             >
-                              <span className="text-lg">Post Project</span>
+                                <span className="text-lg">Post Project</span>
                             </button>
                             
                             {isMember ? (
-                              <button 
-                                onClick={handleLeaveCommunity}
-                                disabled={isLoading}
-                                className="px-6 py-3 border-2 border-red-500 text-red-500 rounded-lg font-medium
-                                  hover:bg-red-500 hover:text-white transition-all duration-300 disabled:opacity-50"
-                              >
-                                {isLoading ? "Leaving..." : "Leave Community"}
-                              </button>
+                                <button 
+                                    onClick={handleLeaveCommunity}
+                                    disabled={isLoading}
+                                    className="px-6 py-3 bg-red-500/10 backdrop-blur-lg border border-red-500/20 text-red-500 rounded-lg font-medium
+                                        hover:bg-red-500/20 transition-all duration-300 disabled:opacity-50"
+                                >
+                                    {isLoading ? "Leaving..." : "Leave Community"}
+                                </button>
                             ) : (
-                              <button 
-                                onClick={handleJoinCommunity}
-                                disabled={isLoading}
-                                className="px-6 py-3 border-2 border-[#00ff9d] text-[#00ff9d] rounded-lg font-medium
-                                  hover:bg-[#00ff9d] hover:text-black transition-all duration-300 disabled:opacity-50"
-                              >
-                                {isLoading ? "Joining..." : "Join Community"}
-                              </button>
+                                <button 
+                                    onClick={handleJoinCommunity}
+                                    disabled={isLoading}
+                                    className="px-6 py-3 bg-[#00ff9d]/10 backdrop-blur-lg border border-[#00ff9d]/20 text-[#00ff9d] rounded-lg font-medium
+                                        hover:bg-[#00ff9d]/20 transition-all duration-300 disabled:opacity-50"
+                                >
+                                    {isLoading ? "Joining..." : "Join Community"}
+                                </button>
                             )}
                         </div>
                     </div>
                     
                     {/* Enhanced Tab Navigation */}
                     <div className="mb-12">
-                      <div className="flex gap-2 p-1 bg-white/5 rounded-lg">
-                        {[
-                          { id: 'posts', label: 'Posts' },
-                          { id: 'members', label: 'Members' },
-                          { id: 'help-wanted', label: 'Help Wanted' }
-                        ].map((tab) => (
-                          <button
-                            key={tab.id}
-                            onClick={() => setActiveTab(tab.id)}
-                            className={`flex-1 py-3 px-6 rounded-lg font-medium transition-all duration-300 ${
-                              activeTab === tab.id
-                                ? 'bg-[#00ff9d] text-black'
-                                : 'text-gray-400 hover:text-white hover:bg-white/5'
-                            }`}
-                          >
-                            {tab.label}
-                          </button>
-                        ))}
-                      </div>
+                        <div className="flex gap-2 bg-black/20 backdrop-blur-md p-1 rounded-lg border border-white/5">
+                            {[
+                                { id: 'posts', label: 'Posts' },
+                                { id: 'members', label: 'Members' },
+                                { id: 'help-wanted', label: 'Help Wanted' }
+                            ].map((tab) => (
+                                <button
+                                    key={tab.id}
+                                    onClick={() => setActiveTab(tab.id)}
+                                    className={`flex-1 py-3 px-6 rounded-lg font-medium transition-all duration-300 ${
+                                        activeTab === tab.id
+                                            ? 'bg-white/10 text-white shadow-lg backdrop-blur-lg'
+                                            : 'text-gray-400 hover:text-white hover:bg-white/5'
+                                    }`}
+                                >
+                                    {tab.label}
+                                </button>
+                            ))}
+                        </div>
                     </div>
                     
-                    {/* Content Area with consistent styling */}
-                    <div className="bg-black/20 rounded-xl p-6">
-                      {activeTab === 'posts' ? (
-                        <ProjectList 
-                          submittedProjects={submittedProjects}
-                          expandedProject={expandedProject}
-                          toggleExpand={toggleExpand}
-                          comments={comments}
-                          newComment={newComment}
-                          setNewComment={setNewComment}
-                          handleCommentSubmit={handleCommentSubmit}
-                        />
-                      ) : activeTab === 'members' ? (
-                        <MembersList communityMembers={communityMembers} />
-                      ) : (
-                        <HelpWantedList 
-                          sharedProjects={sharedProjects}
-                          onJoinProject={handleJoinSharedProject}
-                        />
-                      )}
+                    {/* Content Area */}
+                    <div className="backdrop-blur-md bg-black/10 rounded-xl p-6 border border-white/5">
+                        {activeTab === 'posts' ? (
+                            <ProjectList 
+                                submittedProjects={submittedProjects}
+                                expandedProject={expandedProject}
+                                toggleExpand={toggleExpand}
+                                comments={comments}
+                                newComment={newComment}
+                                setNewComment={setNewComment}
+                                handleCommentSubmit={handleCommentSubmit}
+                                starredProjects={starredProjects}
+                                setStarredProjects={setStarredProjects}
+                            />
+                        ) : activeTab === 'members' ? (
+                            <MembersList communityMembers={communityMembers} />
+                        ) : (
+                            <HelpWantedList 
+                                sharedProjects={sharedProjects}
+                                onJoinProject={handleJoinSharedProject}
+                            />
+                        )}
                     </div>
                 </div>
                 
                 <PostModal 
-                  showModal={showModal}
-                  setShowModal={setShowModal}
-                  userProjects={userProjects}
-                  handleProjectSelect={handleProjectSelect}
-                  summary={summary}
-                  setSummary={setSummary}
-                  deployedLink={deployedLink}
-                  setDeployedLink={setDeployedLink}
-                  handlePublish={handlePublishContent}
-                  isHelpWanted={activeTab === 'help-wanted'}
+                    showModal={showModal}
+                    setShowModal={setShowModal}
+                    userProjects={userProjects}
+                    handleProjectSelect={handleProjectSelect}
+                    summary={summary}
+                    setSummary={setSummary}
+                    deployedLink={deployedLink}
+                    setDeployedLink={setDeployedLink}
+                    handlePublish={handlePublishContent}
+                    isHelpWanted={activeTab === 'help-wanted'}
                 />
             </div>
         </div>

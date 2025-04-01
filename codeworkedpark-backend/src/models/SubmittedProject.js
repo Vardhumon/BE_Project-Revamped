@@ -9,6 +9,10 @@ const submittedProjectSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId, 
         ref: "User" 
     },
+    stars: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }],
     username: String,
     githubLink: String,
     deploymentLink: String,

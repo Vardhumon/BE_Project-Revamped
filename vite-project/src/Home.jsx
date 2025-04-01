@@ -56,6 +56,25 @@ const HomePage = () => {
 
   return (
     <div className="pt-20 min-h-screen bg-black text-white">
+      <style>
+          {`
+            ::-webkit-scrollbar {
+              width: 6px;
+            }
+            ::-webkit-scrollbar-track {
+              background: rgba(255, 255, 255, 0.1);
+              border-radius: 10px;
+            }
+            ::-webkit-scrollbar-thumb {
+              background: #00ff9d;
+              border-radius: 10px;
+            }
+            ::-webkit-scrollbar-thumb:hover {
+              background: #00cc7d;
+            }
+          `}
+        </style>
+        
       {/* Hero Section - Enhanced with particle effect background */}
       <motion.section 
         initial={{ opacity: 0 }}

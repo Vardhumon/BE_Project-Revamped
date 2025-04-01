@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Choices() {
   const navigate = useNavigate();
@@ -70,8 +71,32 @@ export default function Choices() {
   };
 
   return (
-    <div className="min-h-screen bg-black pt-20 px-4">
-      <div className="max-w-6xl mx-auto">
+    <div className="min-h-screen bg-black pt-20 px-4 overflow-hidden">
+      {/* Background Elements */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#00ff9d]/10 to-transparent">
+          {/* Add animated particles here */}
+          {Array.from({ length: 20 }).map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-1 h-1 bg-[#00ff9d]/30 rounded-full"
+              animate={{
+                y: [-20, 20],
+                opacity: [0.2, 0.5, 0.2],
+              }}
+              transition={{
+                duration: Math.random() * 2 + 2,
+                repeat: Infinity,
+                ease: "linear",
+              }}
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+              }}
+            />
+          ))}
+        </div>
+
+      <div className="max-w-6xl mx-auto relative z-10">
         <h1 className="text-4xl md:text-5xl font-bold text-center mb-16 bg-clip-text text-transparent bg-gradient-to-r from-white to-[#00ff9d]">
           Customize Your Development Journey
         </h1>

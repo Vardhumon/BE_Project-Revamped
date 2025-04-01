@@ -5,6 +5,7 @@ const projectSchema = new mongoose.Schema({
     description: String,
     techStack: [String],
     difficultyLevel: String,
+    
     steps: [
         {
             step: String,

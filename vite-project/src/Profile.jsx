@@ -8,6 +8,10 @@ import ProfileTab from "./components/profile/ProfileTab";
 import ProjectsTab from "./components/profile/ProjectsTab";
 import PortfolioBuilder from './components/profile/PortfolioBuilder';
 
+// Add new import for dashboard components
+import { BarChart, Activity, Award, GitBranch, Star, Clock } from 'lucide-react';
+import UserDashboard from './components/profile/UserDashboard';
+
 export default function Profile() {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -121,10 +125,117 @@ export default function Profile() {
     });
   };
 
+  // Add new state for dashboard metrics
+  const [metrics, setMetrics] = useState({
+    totalProjects: 0,
+    completedProjects: 0,
+    projectProgress: {},
+    activeStreak: 0,
+    totalContributions: 0,
+    recentActivity: []
+  });
+
+  // Add new function to calculate metrics
+  const calculateMetrics = (projectsData) => {
+    const total = projectsData.length;
+    const completed = projectsData.filter(p => 
+      p.status === 'completed' || 
+      (completedSteps[p.projectId._id] && Object.values(completedSteps[p.projectId._id]).flat().length > 0)
+    ).length;
+
+    const progress = projectsData.reduce((acc, project) => {
+      const totalSteps = project.projectId.steps?.length || 0;
+      const completedStepsCount = completedSteps[project.projectId._id] 
+        ? Object.values(completedSteps[project.projectId._id]).flat().length 
+        : 0;
+      acc[project.projectId._id] = (completedStepsCount / totalSteps) * 100;
+      return acc;
+    }, {});
+
+    setMetrics({
+      totalProjects: total,
+      completedProjects: completed,
+      projectProgress: progress,
+      activeStreak: calculateStreak(),
+      totalContributions: calculateTotalContributions(),
+      recentActivity: generateRecentActivity(projectsData)
+    });
+  };
+
+  // Add these helper functions before calculateMetrics
+  const calculateStreak = () => {
+    // Sort projects by last activity
+    const sortedProjects = [...projects].sort((a, b) => {
+      const aDate = new Date(a.updatedAt || a.createdAt);
+      const bDate = new Date(b.updatedAt || b.createdAt);
+      return bDate - aDate;
+    });
+
+    if (sortedProjects.length === 0) return 0;
+
+    let streak = 0;
+    const today = new Date();
+    const oneDay = 24 * 60 * 60 * 1000;
+
+    // Check the most recent activity
+    const lastActivity = new Date(sortedProjects[0].updatedAt || sortedProjects[0].createdAt);
+    const daysSinceLastActivity = Math.floor((today - lastActivity) / oneDay);
+
+    // If no activity in the last day, streak is broken
+    if (daysSinceLastActivity > 1) return 0;
+
+    // Calculate streak by checking consecutive days of activity
+    let currentDate = new Date(lastActivity);
+    for (let i = 0; i < sortedProjects.length; i++) {
+      const activityDate = new Date(sortedProjects[i].updatedAt || sortedProjects[i].createdAt);
+      const daysDifference = Math.floor((currentDate - activityDate) / oneDay);
+
+      if (daysDifference <= 1) {
+        streak++;
+        currentDate = activityDate;
+      } else {
+        break;
+      }
+    }
+
+    return streak;
+  };
+
+  const calculateTotalContributions = () => {
+    return Object.values(completedSteps).reduce((total, projectSteps) => {
+      return total + Object.values(projectSteps).reduce((stepTotal, steps) => {
+        return stepTotal + steps.length;
+      }, 0);
+    }, 0);
+  };
+
+  const generateRecentActivity = (projectsData) => {
+    const activities = projectsData
+      .filter(project => {
+        const projectSteps = completedSteps[project.projectId._id];
+        return projectSteps && Object.values(projectSteps).some(steps => steps.length > 0);
+      })
+      .map(project => {
+        const completedCount = Object.values(completedSteps[project.projectId._id] || {})
+          .reduce((total, steps) => total + steps.length, 0);
+        return `Completed ${completedCount} tasks in ${project.projectId.title}`;
+      })
+      .slice(0, 5); // Get only the 5 most recent activities
+
+    return activities;
+  };
+
+  // Update useEffect to include metrics calculation
   useEffect(() => {
     fetchUserProjectsAndProgress();
     fetchUserProfile();
   }, []);
+
+  useEffect(() => {
+    if (projects.length > 0) {
+      calculateMetrics(projects);
+    }
+  }, [projects, completedSteps]);
 
   const isStepCompleted = (projectId, stepId, subSteps) => {
     if (!completedSteps[projectId] || !completedSteps[projectId][stepId]) {
@@ -276,68 +387,85 @@ export default function Profile() {
 
           {/* Navigation */}
           <div className="flex items-center gap-6 mb-8 border-b border-white/10 pb-6">
-            <button 
-              onClick={() => setActiveTab("profile")}
-              className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all duration-300 ${
-                activeTab === "profile" 
-                  ? "text-[#00ff9d] bg-[#00ff9d]/10" 
-                  : "text-gray-400 hover:text-white"
-              }`}
-            >
-              <User className="w-5 h-5" />
-              Profile
-            </button>
-            
-            <button 
-              onClick={() => setActiveTab("projects")}
-              className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all duration-300 ${
-                activeTab === "projects" 
-                  ? "text-[#00ff9d] bg-[#00ff9d]/10" 
-                  : "text-gray-400 hover:text-white"
-              }`}
-            >
-              <Code2 className="w-5 h-5" />
-              Projects
-            </button>
+          <button 
+            onClick={() => setActiveTab("profile")}
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all duration-300 ${
+              activeTab === "profile" 
+                ? "text-[#00ff9d] bg-[#00ff9d]/10" 
+                : "text-gray-400 hover:text-white"
+            }`}
+          >
+            <User className="w-5 h-5" />
+            Profile
+          </button>
+          
+          <button 
+            onClick={() => setActiveTab("dashboard")}
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all duration-300 ${
+              activeTab === "dashboard" 
+                ? "text-[#00ff9d] bg-[#00ff9d]/10" 
+                : "text-gray-400 hover:text-white"
+            }`}
+          >
+            <BarChart className="w-5 h-5" />
+            Dashboard
+          </button> 
+          
+          <button 
+            onClick={() => setActiveTab("projects")}
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all duration-300 ${
+              activeTab === "projects" 
+                ? "text-[#00ff9d] bg-[#00ff9d]/10" 
+                : "text-gray-400 hover:text-white"
+            }`}
+          >
+            <Code2 className="w-5 h-5" />
+            Projects
+          </button>
 
-            <div className="flex-grow" />
+          <div className="flex-grow" />
 
-            <button 
-              onClick={handleLogout}
-              className="flex items-center gap-2 px-4 py-2 text-red-500 hover:text-red-400 transition-colors rounded-xl border border-red-500/20 hover:border-red-500/40"
-            >
-              <LogOut className="w-5 h-5" />
-              Logout
-            </button>
-          </div>
+          <button 
+            onClick={handleLogout}
+            className="flex items-center gap-2 px-4 py-2 text-red-500 hover:text-red-400 transition-colors rounded-xl border border-red-500/20 hover:border-red-500/40"
+          >
+            <LogOut className="w-5 h-5" />
+            Logout
+          </button>
+        </div>
+
+
+         
 
           {/* Content */}
           <div className="relative z-10">
-            {activeTab === "profile" ? (
-              <>
-                <ProfileTab 
-                  userInfo={userInfo}
-                  editing={editing}
-                  setEditing={setEditing}
-                  handleSave={handleSave}
-                  setUserInfo={setUserInfo}
-                />
-                <PortfolioBuilder userInfo={userInfo} projects={projects} />
-              </>
-            ) : (
-              <ProjectsTab 
-                loading={loading}
-                projects={projects}
-                expandedProject={expandedProject}
-                setExpandedProject={setExpandedProject}
-                isStepCompleted={isStepCompleted}
-                isSubStepCompleted={isSubStepCompleted}
-                toggleMainStep={toggleMainStep}
-                toggleSubStep={toggleSubStep}
-                handleSubmit={handleSubmit}
+          {activeTab === "dashboard" ? (
+            <UserDashboard metrics={metrics} userInfo={userInfo} projects={projects} />
+          ) : activeTab === "profile" ? (
+            <>
+              <ProfileTab 
+                userInfo={userInfo}
+                editing={editing}
+                setEditing={setEditing}
+                handleSave={handleSave}
+                setUserInfo={setUserInfo}
               />
-            )}
-          </div>
+              <PortfolioBuilder userInfo={userInfo} projects={projects} />
+            </>
+          ) : (
+            <ProjectsTab 
+              loading={loading}
+              projects={projects}
+              expandedProject={expandedProject}
+              setExpandedProject={setExpandedProject}
+              isStepCompleted={isStepCompleted}
+              isSubStepCompleted={isSubStepCompleted}
+              toggleMainStep={toggleMainStep}
+              toggleSubStep={toggleSubStep}
+              handleSubmit={handleSubmit}
+            />
+          )}
+        </div>
         </motion.div>
       </div>
     </motion.div>
