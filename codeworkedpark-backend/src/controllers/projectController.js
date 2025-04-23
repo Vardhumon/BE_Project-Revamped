@@ -12,40 +12,43 @@ exports.getProjects = async (req, res) => {
     }
 };
 
+const projectRecommender = require('../ml/recommendation_model');
+
 exports.getProject = async (req, res) => {
-    const { userStack, experienceLevel,category } = req.body;
-    const categoryValue = category.replace(/\s+/g, '').normalize();
-const expectedValue = "Machine Learning".replace(/\s+/g, '').normalize();
-
-console.log('Final equality check:', categoryValue === expectedValue);
-
-
-
-// Log both values to debug the comparison);
+    const { userStack, experienceLevel, category } = req.body;
     try {
         const projects = await Project.find();
-        const difficultyMap = {
-            'beginner': 'easy',
-            'intermediate': 'medium',
-            'advanced': 'hard'
-        };
+        const user = { techStack: userStack, experienceLevel };
 
-        const filteredProjects = projects.filter((project) =>
-            project.techStack.some((tech) => userStack.includes(tech)) &&
-            project.difficultyLevel.toLowerCase() === difficultyMap[experienceLevel.toLowerCase()]
-            // && project.tag.toLowerCase() === categoryValue.toLowerCase()
-        );
-        // console.log(filteredProjects);
-        if (filteredProjects.length === 0) {
+        // Initialize and train the model if needed
+        if (!projectRecommender.model) {
+            const users = [user]; // In production, fetch more users for better training
+            await projectRecommender.preprocessData(users, projects);
+            await projectRecommender.buildModel();
+            
+            // Create sample interactions for initial training
+            const sampleInteractions = projects.map((_, index) => ({
+                userIndex: 0,
+                projectIndex: index,
+                completed: Math.random() > 0.5 // Random completion status for initial training
+            }));
+            await projectRecommender.trainModel(sampleInteractions);
+        }
+
+        // Get personalized recommendations
+        const recommendations = await projectRecommender.getTopRecommendations(user, projects, 5);
+
+        if (recommendations.length === 0) {
             return res.status(200).json({ message: "No more projects to recommend" });
         }
 
-        const randomIndex = Math.floor(Math.random() * filteredProjects.length);
-        const recommendedProject = filteredProjects[randomIndex].toObject();
+        // Select the top recommended project
+        const recommendedProject = recommendations[0].toObject();
 
+        // Add deadline based on difficulty
         recommendedProject.deadline =
-            recommendedProject.difficultyLevel === "Easy" ? "1 week" :
-            recommendedProject.difficultyLevel === "Medium" ? "2 weeks" : "3 weeks";
+            recommendedProject.difficultyLevel.toLowerCase() === "easy" ? "1 week" :
+            recommendedProject.difficultyLevel.toLowerCase() === "medium" ? "2 weeks" : "3 weeks";
 
         res.status(200).json({ project: recommendedProject });
     } catch (err) {

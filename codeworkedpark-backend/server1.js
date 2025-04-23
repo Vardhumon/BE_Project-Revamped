@@ -5,15 +5,17 @@ const { Server } = require("socket.io");
 const fetch = require('node-fetch');  // Add this line
 require("dotenv").config();
 
+// Import socket handlers
+const setupSocket = require('./src/socket/socketHandler');
+const setupChatHandlers = require('./src/socket/chatHandler');
+
 // Import models
 const SubmittedProject = require('./src/models/SubmittedProject');
 const Project = require('./src/models/Project');
 const User = require('./src/models/User');
 const Comment = require('./src/models/Comment');
 const Community = require('./src/models/Community');
-
-// Import socket handler
-const setupSocket = require('./src/socket/socketHandler');
+const ChatMessage = require('./src/models/ChatMessage');
 
 // Import routes
 const authRoutes = require('./src/routes/auth');
@@ -23,6 +25,7 @@ const projectRoutes = require('./src/routes/project');
 const commentRoutes = require('./src/routes/comment');
 const sharedProjectRoutes = require('./src/routes/sharedProjectRoutes');
 const starRoutes = require('./src/routes/starRoutes');
+const chatRoutes = require('./src/routes/chatRoutes');
 // Import DB connection
 const connectDB = require('./src/config/db');
 
@@ -43,6 +46,7 @@ app.use('/api/', projectRoutes);
 app.use('/api/', commentRoutes);
 app.use('/api', sharedProjectRoutes);
 app.use('/api', starRoutes);
+app.use('/api/chat', chatRoutes);
 // Socket.io setup
 const server = http.createServer(app);
 const io = new Server(server, {
@@ -54,6 +58,7 @@ const io = new Server(server, {
 
 // Initialize socket handlers
 setupSocket(io);
+setupChatHandlers(io);
 
 // Error handling middleware
 app.use((err, req, res, next) => {

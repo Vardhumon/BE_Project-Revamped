@@ -8,6 +8,7 @@ import MembersList from "./components/community/MembersList";
 import ProjectList from "./components/community/ProjectList";
 import HelpWantedList from "./components/community/HelpWantedList";
 import { Star } from 'lucide-react';
+import ChatTab from './components/chat/ChatTab';
 
 
 const socket = io("http://localhost:5000");
@@ -471,7 +472,8 @@ const CommunityPage = () => {
                             {[
                                 { id: 'posts', label: 'Posts' },
                                 { id: 'members', label: 'Members' },
-                                { id: 'help-wanted', label: 'Help Wanted' }
+                                { id: 'help-wanted', label: 'Help Wanted' },
+                                { id: 'chat', label: 'Chat' }
                             ].map((tab) => (
                                 <button
                                     key={tab.id}
@@ -504,11 +506,13 @@ const CommunityPage = () => {
                             />
                         ) : activeTab === 'members' ? (
                             <MembersList communityMembers={communityMembers} />
-                        ) : (
+                        ) : activeTab === 'help-wanted' ? (
                             <HelpWantedList 
                                 sharedProjects={sharedProjects}
                                 onJoinProject={handleJoinSharedProject}
                             />
+                        ) : (
+                            <ChatTab communityName={window.location.pathname.split("/").pop() || "Other"} />
                         )}
                     </div>
                 </div>
