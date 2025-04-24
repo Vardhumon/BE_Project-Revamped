@@ -32,16 +32,19 @@ const setupChatHandlers = (io) => {
         });
 
         // Handle community messages
-        socket.on('send_community_message', async ({ communityName, userId, username, content }) => {
+        socket.on('send_community_message', async ({ communityName, userId, content, replyTo, username }) => {
             try {
-                const message = new ChatMessage({
+                const messageData = {
                     community: communityName,
                     senderId: new mongoose.Types.ObjectId(userId),
-                    username,
                     content,
-                    timestamp: new Date()
-                });
-
+                    username,
+                    timestamp: new Date(),
+                };
+                if (replyTo) {
+                    messageData.replyTo = replyTo;
+                }
+                const message = new ChatMessage(messageData);
                 await message.save();
                 io.to(communityName.toString()).emit('new_message', message);
             } catch (error) {

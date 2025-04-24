@@ -14,6 +14,7 @@ import ProjectRecommendation from "./ProjectRecommendation";
 import Community from "./Community";
 import CommunityPage from "./CommunityPage";
 import './App.css';
+import UserProfile from "./components/profile/UserProfile";
 
 export default function App() {
   const [user, setUser] = useState(null);
@@ -100,6 +101,10 @@ export default function App() {
           <Route 
             path="/project-details" 
             element={<ProjectRecommendation />} 
+          />
+          <Route 
+            path="/profile/:userId" 
+            element={<UserProfile />} 
           />
           <Route 
             path="/community" 

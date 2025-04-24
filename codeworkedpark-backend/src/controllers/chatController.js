@@ -38,14 +38,23 @@ const mongoose = require('mongoose');
 exports.getCommunityMessages = async (req, res) => {
     try {
         const { communityName } = req.params;
+        const { page = 1, limit = 10 } = req.query; // Add pagination information
+        
         const messages = await ChatMessage.find({ community: communityName })
             .sort({ timestamp: -1 })
-            .limit(100)
-            .populate('senderId', 'name avatar'); // Added populate to get user details
-        res.json(messages.reverse());
+            .skip((page - 1) * limit)
+            .limit(parseInt(limit))
+            .populate('senderId', 'name');
+        // console.log(messages);
+        const totalMessages = await ChatMessage.countDocuments({ community: communityName });
+        console.log("hi",totalMessages);
+        res.json({
+            messages: messages.reverse(),
+            hasMore: totalMessages > page * limit,
+            total: totalMessages
+        });
     } catch (error) {
-        console.error('Error fetching community chat history:', error);
-        res.status(500).json({ error: 'Failed to fetch chat history' });
+        res.status(500).json({ message: 'Error fetching messages' });
     }
 };
 

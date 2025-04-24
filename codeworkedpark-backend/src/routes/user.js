@@ -11,5 +11,7 @@ router.post('/getUserProjects', userController.getUserProjects);
 router.post('/progress', userController.getUserProgress);
 router.post('/accept-project', userController.acceptProject);
 router.post('/update-progress', userController.updateTaskProgress);
+router.get('/:userId/profile', userController.getUserProfile);
+
 
 module.exports = router;

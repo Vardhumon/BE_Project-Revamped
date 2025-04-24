@@ -126,3 +126,30 @@ exports.updateTaskProgress = async (req, res) => {
         res.status(500).json({ message: "Server error", error: err.message });
     }
 };
+
+// Add this to your exports
+exports.getUserProfile = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    console.log("hi",userId);
+    const user = await User.findById(userId)
+      .select('-password')
+      .populate('projects.projectId');
+    
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.json({
+      name: user.name,
+      bio: user.bio,
+      techStack: user.techStack,
+      experienceLevel: user.experienceLevel,
+      projects: user.projects,
+      education: user.education,
+      hobbies: user.hobbies
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching user profile' });
+  }
+};
