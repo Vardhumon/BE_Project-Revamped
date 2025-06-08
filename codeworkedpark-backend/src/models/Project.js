@@ -15,6 +15,7 @@ const projectSchema = new mongoose.Schema({
     testingMetrics: [String],
     tag: String,
     enhancements: [String],
-}, { timestamps: true });
+    stars: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
+});
 
 module.exports = mongoose.model("Project", projectSchema);

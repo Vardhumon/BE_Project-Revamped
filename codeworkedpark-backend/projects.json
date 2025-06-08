@@ -939,7 +939,7 @@
           "Test with unseen news articles for real-world validation.",
           "Optimize performance to reduce false positives."
         ],
-        "tag": "ML"
+        "tag": "Machine Learning"
       },
       {
         "title": "Handwritten Digit Recognition",
@@ -977,7 +977,7 @@
           "Compare performance with different CNN architectures.",
           "Optimize model size and inference speed."
         ],
-        "tag": "ML"
+        "tag": "Machine Learning"
       },
       {
         "title": "AI-Powered Chatbot",
@@ -1015,7 +1015,7 @@
           "Analyze response coherence and fluency.",
           "Reduce false positives in chatbot responses."
         ],
-        "tag": "ML"
+        "tag": "Machine Learning"
       },
       {
         "title": "Stock Price Prediction",
@@ -1053,7 +1053,7 @@
           "Compare LSTM with ARIMA and other models.",
           "Optimize for real-time inference."
         ],
-        "tag": "ML"
+        "tag": "Machine Learning"
       },
       {
         "title": "Image Colorization",
@@ -1091,7 +1091,7 @@
           "Compare against traditional colorization techniques.",
           "Optimize inference time for real-time performance."
         ],
-        "tag": "ML"
+        "tag": "Machine Learning"
       },
       {
         "title": "Voice Emotion Recognition",
@@ -1129,7 +1129,7 @@
           "Test robustness against noisy audio.",
           "Optimize for real-time inference speed."
         ],
-        "tag": "ML"
+        "tag": "Machine Learning"
       }, {
         "title": "CI/CD Pipeline with Jenkins",
         "description": "Implement a CI/CD pipeline using Jenkins to automate testing and deployment.",
@@ -1357,5 +1357,925 @@
           "Monitor synchronization between Git and cluster state."
         ],
         "tag": "DevOps"
-      }
+      },
+      {
+        "title": "Book Finder & Reader",
+        "description": "Search for books and read previews within the app.",
+        "techStack": ["React Native", "Google Books API"],
+        "difficultyLevel": "Medium",
+        "steps": [
+          {
+            "step": "Book search interface",
+            "subSteps": [
+              "Create a search bar for book titles.",
+              "Use Google Books API for results."
+            ]
+          },
+          {
+            "step": "Book preview",
+            "subSteps": [
+              "Integrate WebView to display previews.",
+              "Show cover, description, and author."
+            ]
+          },
+          {
+            "step": "Save reading list",
+            "subSteps": [
+              "Allow saving books to a reading list.",
+              "Store locally or sync with Firebase."
+            ]
+          }
+        ],
+        "testingMetrics": [
+          "Search accuracy and speed.",
+          "Preview loads without errors.",
+          "Reading list syncs properly."
+        ],
+        "tag": "Full-Stack"
+      },
+      {
+        "title": "Language Learning App",
+        "description": "Create a flashcard-style app for vocabulary practice.",
+        "techStack": ["React Native", "Firebase", "Text-to-Speech API"],
+        "difficultyLevel": "Medium",
+        "steps": [
+          {
+            "step": "Create vocabulary sets",
+            "subSteps": [
+              "Add flashcards with word/translation.",
+              "Use Firebase to store custom sets."
+            ]
+          },
+          {
+            "step": "Learning modes",
+            "subSteps": [
+              "Implement quiz and review modes.",
+              "Track correct/incorrect answers."
+            ]
+          },
+          {
+            "step": "Add audio support",
+            "subSteps": [
+              "Use TTS to read out words.",
+              "Add toggle for pronunciation."
+            ]
+          }
+        ],
+        "testingMetrics": [
+          "Flashcards load correctly.",
+          "Audio works across devices.",
+          "Progress saved between sessions."
+        ],
+        "tag": "Full-Stack"
+      },
+        {
+          "title": "Job Board Website",
+          "description": "Build a job board where users can post and search for job listings.",
+          "techStack": ["React", "Node.js", "MongoDB"],
+          "difficultyLevel": "Medium",
+          "steps": [
+            {
+              "step": "Frontend UI",
+              "subSteps": [
+                "Create pages for job listings, job details, and post-job form.",
+                "Use React Router for navigation."
+              ]
+            },
+            {
+              "step": "Backend API",
+              "subSteps": [
+                "Set up RESTful routes for job CRUD operations.",
+                "Connect to MongoDB and create Job model."
+              ]
+            },
+            {
+              "step": "Authentication",
+              "subSteps": [
+                "Allow users to log in and post/manage their jobs.",
+                "Use JWT for protected routes."
+              ]
+            }
+          ],
+          "testingMetrics": [
+            "CRUD operations for jobs work as expected.",
+            "Users cannot access other users’ posts.",
+            "Jobs are searchable and filterable."
+          ],
+          "tag": "Full-Stack"
+        },
+        {
+          "title": "E-Commerce Store",
+          "description": "Create a simple online store with cart and checkout features.",
+          "techStack": ["React", "Express", "MongoDB", "Stripe API"],
+          "difficultyLevel": "Hard",
+          "steps": [
+            {
+              "step": "Product listing",
+              "subSteps": [
+                "Display products with images, prices, and ratings.",
+                "Add filter and sort options."
+              ]
+            },
+            {
+              "step": "Shopping cart",
+              "subSteps": [
+                "Implement cart functionality with quantity management.",
+                "Persist cart with localStorage."
+              ]
+            },
+            {
+              "step": "Checkout",
+              "subSteps": [
+                "Integrate Stripe for payments.",
+                "Store orders in MongoDB."
+              ]
+            }
+          ],
+          "testingMetrics": [
+            "Cart updates in real-time.",
+            "Orders and payments are tracked correctly.",
+            "Frontend handles loading and errors gracefully."
+          ],
+          "tag": "Full-Stack"
+        },
+        {
+          "title": "Blog Platform",
+          "description": "Create a blog website where users can publish, edit, and read articles.",
+          "techStack": ["React", "Node.js", "MongoDB", "JWT"],
+          "difficultyLevel": "Medium",
+          "steps": [
+            {
+              "step": "Frontend pages",
+              "subSteps": [
+                "Create home, article, and author profile pages.",
+                "Add markdown editor for new posts."
+              ]
+            },
+            {
+              "step": "Backend setup",
+              "subSteps": [
+                "Create REST API for articles and users.",
+                "Use JWT for user authentication."
+              ]
+            },
+            {
+              "step": "User features",
+              "subSteps": [
+                "Only authors can edit/delete their posts.",
+                "Show likes/comments on articles."
+              ]
+            }
+          ],
+          "testingMetrics": [
+            "CRUD on blog posts works with permissions.",
+            "Articles display properly formatted markdown.",
+            "User auth is secure and persistent."
+          ],
+          "tag": "Full-Stack"
+        },
+        {
+          "title": "Real-Time Chat App",
+          "description": "A web chat app with real-time messaging between users.",
+          "techStack": ["React", "Node.js", "Socket.io", "MongoDB"],
+          "difficultyLevel": "Medium",
+          "steps": [
+            {
+              "step": "Set up chat UI",
+              "subSteps": [
+                "Create UI for inbox and chat view.",
+                "Show chat bubbles and timestamps."
+              ]
+            },
+            {
+              "step": "Integrate Socket.io",
+              "subSteps": [
+                "Enable real-time messaging.",
+                "Broadcast messages to specific chat rooms."
+              ]
+            },
+            {
+              "step": "Message storage",
+              "subSteps": [
+                "Store chat history in MongoDB.",
+                "Fetch previous messages on reload."
+              ]
+            }
+          ],
+          "testingMetrics": [
+            "Messages appear instantly.",
+            "Users are correctly assigned to rooms.",
+            "Chat history loads on refresh."
+          ],
+          "tag": "Full-Stack"
+        },
+        {
+          "title": "Portfolio CMS",
+          "description": "A portfolio site with an admin panel to add/edit projects.",
+          "techStack": ["React", "Express", "MongoDB", "JWT"],
+          "difficultyLevel": "Medium",
+          "steps": [
+            {
+              "step": "Frontend site",
+              "subSteps": [
+                "Display project cards and contact form.",
+                "Add filter by skills or category."
+              ]
+            },
+            {
+              "step": "Admin dashboard",
+              "subSteps": [
+                "Create login-protected admin panel.",
+                "CRUD operations for portfolio items."
+              ]
+            },
+            {
+              "step": "Backend API",
+              "subSteps": [
+                "Build REST API for project and contact form submissions.",
+                "Protect admin routes using JWT."
+              ]
+            }
+          ],
+          "testingMetrics": [
+            "Only admin can access dashboard.",
+            "Projects render dynamically from DB.",
+            "Contact form stores messages correctly."
+          ],
+          "tag": "Full-Stack"
+        },
+        {
+          "title": "Recipe Sharing Platform",
+          "description": "Users can share, save, and comment on food recipes.",
+          "techStack": ["React", "Express", "MongoDB"],
+          "difficultyLevel": "Medium",
+          "steps": [
+            {
+              "step": "Frontend design",
+              "subSteps": [
+                "Build pages for recipe feed and detailed recipe view.",
+                "Add form for adding recipes."
+              ]
+            },
+            {
+              "step": "User features",
+              "subSteps": [
+                "Allow login, likes, bookmarks, and comments.",
+                "Save user’s bookmarked recipes."
+              ]
+            },
+            {
+              "step": "Backend routes",
+              "subSteps": [
+                "Create routes for recipes and user interactions.",
+                "Implement pagination and search."
+              ]
+            }
+          ],
+          "testingMetrics": [
+            "Recipes can be searched and filtered.",
+            "User actions are stored and fetched properly.",
+            "Pagination works on feed."
+          ],
+          "tag": "Full-Stack"
+        },
+        {
+          "title": "Event Planner App",
+          "description": "An app to create, manage, and RSVP to events.",
+          "techStack": ["React", "Express", "MongoDB"],
+          "difficultyLevel": "Medium",
+          "steps": [
+            {
+              "step": "User management",
+              "subSteps": [
+                "Signup/login functionality.",
+                "Admin and attendee roles."
+              ]
+            },
+            {
+              "step": "Event features",
+              "subSteps": [
+                "Add/edit/delete events as admin.",
+                "Allow users to RSVP to events."
+              ]
+            },
+            {
+              "step": "Dashboard & reminders",
+              "subSteps": [
+                "Display user’s upcoming events.",
+                "Send email reminders using a service like Nodemailer."
+              ]
+            }
+          ],
+          "testingMetrics": [
+            "RSVP updates are tracked per user.",
+            "Events are editable by admins only.",
+            "Emails are sent on RSVP."
+          ],
+          "tag": "Full-Stack"
+        },
+        {
+          "title": "Q&A Forum",
+          "description": "A platform where users can post questions and answer others.",
+          "techStack": ["React", "Express", "MongoDB"],
+          "difficultyLevel": "Hard",
+          "steps": [
+            {
+              "step": "Question system",
+              "subSteps": [
+                "Users can post questions with tags.",
+                "Add voting system for questions and answers."
+              ]
+            },
+            {
+              "step": "Answer system",
+              "subSteps": [
+                "Enable answering questions.",
+                "Mark answers as accepted."
+              ]
+            },
+            {
+              "step": "Search and filters",
+              "subSteps": [
+                "Search questions by keyword/tag.",
+                "Sort by popularity or date."
+              ]
+            }
+          ],
+          "testingMetrics": [
+            "Votes are counted correctly.",
+            "Users cannot vote more than once.",
+            "Search returns relevant results."
+          ],
+          "tag": "Full-Stack"
+        },
+        {
+          "title": "Issue Tracker",
+          "description": "Build a mini JIRA-style tool for tracking tasks and bugs.",
+          "techStack": ["React", "Express", "MongoDB"],
+          "difficultyLevel": "Hard",
+          "steps": [
+            {
+              "step": "Board UI",
+              "subSteps": [
+                "Display tasks in columns (To Do, In Progress, Done).",
+                "Drag-and-drop support for task movement."
+              ]
+            },
+            {
+              "step": "Task system",
+              "subSteps": [
+                "CRUD for tasks and assigning users.",
+                "Track due dates, labels, and comments."
+              ]
+            },
+            {
+              "step": "Team collaboration",
+              "subSteps": [
+                "User login and team invite system.",
+                "Real-time updates with polling or websockets."
+              ]
+            }
+          ],
+          "testingMetrics": [
+            "Tasks move correctly across columns.",
+            "Team permissions are respected.",
+            "Updates sync across users."
+          ],
+          "tag": "Full-Stack"
+        },
+        {
+          "title": "Poll & Voting App",
+          "description": "Let users create and vote on polls with real-time updates.",
+          "techStack": ["React", "Node.js", "MongoDB", "Socket.io"],
+          "difficultyLevel": "Medium",
+          "steps": [
+            {
+              "step": "Poll creation",
+              "subSteps": [
+                "Allow users to create questions with options.",
+                "Assign deadlines for polls."
+              ]
+            },
+            {
+              "step": "Voting system",
+              "subSteps": [
+                "Enable voting on open polls.",
+                "Display results in real-time charts."
+              ]
+            },
+            {
+              "step": "Live updates",
+              "subSteps": [
+                "Use Socket.io to update vote counts live.",
+                "Disable voting after deadline."
+              ]
+            }
+          ],
+          "testingMetrics": [
+            "Votes reflect instantly on all clients.",
+            "Users can’t vote more than once.",
+            "Closed polls don’t accept new votes."
+          ],
+          "tag": "Full-Stack"
+        },
+        
+          {
+            "title": "Movie Recommendation System",
+            "description": "Build a basic movie recommendation engine using collaborative filtering.",
+            "techStack": ["Python", "Pandas", "Scikit-learn"],
+            "difficultyLevel": "Easy",
+            "steps": [
+              {
+                "step": "Collect and preprocess data",
+                "subSteps": [
+                  "Use the MovieLens dataset.",
+                  "Clean and merge user ratings with movie metadata.",
+                  "Create a user-item matrix."
+                ]
+              },
+              {
+                "step": "Build recommendation model",
+                "subSteps": [
+                  "Use cosine similarity for collaborative filtering.",
+                  "Recommend movies based on user history.",
+                  "Implement user-based and item-based approaches."
+                ]
+              },
+              {
+                "step": "Build simple UI",
+                "subSteps": [
+                  "Take user input of liked movies.",
+                  "Display top 5 recommended movies.",
+                  "Optional: host on Streamlit or Flask."
+                ]
+              }
+            ],
+            "testingMetrics": [
+              "Precision@K and Recall@K.",
+              "User feedback accuracy.",
+              "Runtime for different dataset sizes."
+            ],
+            "tag": "Machine Learning"
+          },
+          {
+            "title": "Handwritten Digit Recognition",
+            "description": "Create a model to identify handwritten digits using MNIST dataset.",
+            "techStack": ["Python", "TensorFlow", "Keras"],
+            "difficultyLevel": "Easy",
+            "steps": [
+              {
+                "step": "Load and explore MNIST data",
+                "subSteps": [
+                  "Use built-in MNIST dataset in Keras.",
+                  "Visualize digit samples.",
+                  "Normalize pixel values."
+                ]
+              },
+              {
+                "step": "Train a CNN model",
+                "subSteps": [
+                  "Build a CNN with convolution and pooling layers.",
+                  "Train and validate on MNIST.",
+                  "Add dropout to avoid overfitting."
+                ]
+              },
+              {
+                "step": "Evaluate model",
+                "subSteps": [
+                  "Test with unseen digits.",
+                  "Visualize predictions.",
+                  "Export model for deployment."
+                ]
+              }
+            ],
+            "testingMetrics": [
+              "Accuracy and loss curves.",
+              "Confusion matrix.",
+              "Model size and inference speed."
+            ],
+            "tag": "Machine Learning"
+          },
+          {
+            "title": "Spam Email Classifier",
+            "description": "Train a classifier to detect spam emails using NLP.",
+            "techStack": ["Python", "Scikit-learn", "NLTK"],
+            "difficultyLevel": "Easy",
+            "steps": [
+              {
+                "step": "Data collection and cleaning",
+                "subSteps": [
+                  "Use the SMS Spam Collection dataset.",
+                  "Clean text data using regex and NLTK.",
+                  "Convert text to lowercase and remove stopwords."
+                ]
+              },
+              {
+                "step": "Vectorization",
+                "subSteps": [
+                  "Use TF-IDF or CountVectorizer.",
+                  "Split data into train/test.",
+                  "Transform into numerical format."
+                ]
+              },
+              {
+                "step": "Model training and testing",
+                "subSteps": [
+                  "Train with Naive Bayes or SVM.",
+                  "Test accuracy and F1 score.",
+                  "Predict on custom input."
+                ]
+              }
+            ],
+            "testingMetrics": [
+              "Precision, recall, F1 score.",
+              "ROC-AUC curve.",
+              "False positive rate."
+            ],
+            "tag": "Machine Learning"
+          },
+          {
+            "title": "Image Colorization",
+            "description": "Automatically colorize black-and-white images using deep learning.",
+            "techStack": ["Python", "OpenCV", "TensorFlow"],
+            "difficultyLevel": "Medium",
+            "steps": [
+              {
+                "step": "Prepare grayscale dataset",
+                "subSteps": [
+                  "Convert color images to grayscale.",
+                  "Use datasets like CIFAR-10 or ImageNet.",
+                  "Normalize L*a*b color space."
+                ]
+              },
+              {
+                "step": "Train CNN model",
+                "subSteps": [
+                  "Build encoder-decoder architecture.",
+                  "Use color channels as labels.",
+                  "Train on image batches."
+                ]
+              },
+              {
+                "step": "Colorize images",
+                "subSteps": [
+                  "Predict color on grayscale input.",
+                  "Merge and convert to RGB.",
+                  "Visualize results."
+                ]
+              }
+            ],
+            "testingMetrics": [
+              "Color distance (PSNR, SSIM).",
+              "Visual inspection.",
+              "Model size and inference time."
+            ],
+            "tag": "Machine Learning"
+          },
+          {
+            "title": "Face Mask Detector",
+            "description": "Detect whether a person is wearing a mask or not using computer vision.",
+            "techStack": ["Python", "OpenCV", "TensorFlow", "Keras"],
+            "difficultyLevel": "Medium",
+            "steps": [
+              {
+                "step": "Prepare face mask dataset",
+                "subSteps": [
+                  "Use dataset with and without masks.",
+                  "Preprocess images: resize and normalize.",
+                  "Split into train/test."
+                ]
+              },
+              {
+                "step": "Train CNN classifier",
+                "subSteps": [
+                  "Use transfer learning (e.g., MobileNetV2).",
+                  "Add dense layers for classification.",
+                  "Train and fine-tune model."
+                ]
+              },
+              {
+                "step": "Deploy with OpenCV",
+                "subSteps": [
+                  "Detect faces with Haar cascades.",
+                  "Classify mask presence in real-time.",
+                  "Display results on webcam feed."
+                ]
+              }
+            ],
+            "testingMetrics": [
+              "Classification accuracy.",
+              "FPS in real-time detection.",
+              "Confusion matrix."
+            ],
+            "tag": "Machine Learning"
+          },
+          {
+            "title": "House Price Prediction",
+            "description": "Predict housing prices using regression models.",
+            "techStack": ["Python", "Pandas", "Scikit-learn"],
+            "difficultyLevel": "Easy",
+            "steps": [
+              {
+                "step": "Load and clean dataset",
+                "subSteps": [
+                  "Use the Boston housing dataset.",
+                  "Handle missing values and outliers.",
+                  "Feature engineering and scaling."
+                ]
+              },
+              {
+                "step": "Train regression models",
+                "subSteps": [
+                  "Try Linear Regression, Random Forest, XGBoost.",
+                  "Tune hyperparameters.",
+                  "Use cross-validation."
+                ]
+              },
+              {
+                "step": "Evaluate and visualize",
+                "subSteps": [
+                  "Plot predictions vs actual prices.",
+                  "Check feature importances.",
+                  "Deploy model as a web API."
+                ]
+              }
+            ],
+            "testingMetrics": [
+              "Mean Squared Error (MSE).",
+              "R² score.",
+              "Feature importance ranking."
+            ],
+            "tag": "Machine Learning"
+          },
+          {
+            "title": "Text Summarizer",
+            "description": "Build a model that summarizes long articles into short key points.",
+            "techStack": ["Python", "NLTK", "Transformers"],
+            "difficultyLevel": "Medium",
+            "steps": [
+              {
+                "step": "Preprocess text",
+                "subSteps": [
+                  "Tokenize and clean text.",
+                  "Remove stopwords and punctuation.",
+                  "Use sentence segmentation."
+                ]
+              },
+              {
+                "step": "Summarization model",
+                "subSteps": [
+                  "Use pre-trained BART or T5 models.",
+                  "Fine-tune on custom data if needed.",
+                  "Generate summary from input text."
+                ]
+              },
+              {
+                "step": "Build summary app",
+                "subSteps": [
+                  "Create Flask/Streamlit UI.",
+                  "Paste article and return summary.",
+                  "Allow download of summarized text."
+                ]
+              }
+            ],
+            "testingMetrics": [
+              "ROUGE scores.",
+              "Compression ratio.",
+              "Human evaluation on readability."
+            ],
+            "tag": "Machine Learning"
+          },
+          {
+            "title": "Music Genre Classification",
+            "description": "Classify music into genres using audio features.",
+            "techStack": ["Python", "Librosa", "Keras"],
+            "difficultyLevel": "Medium",
+            "steps": [
+              {
+                "step": "Extract audio features",
+                "subSteps": [
+                  "Use GTZAN music genre dataset.",
+                  "Extract MFCC, chroma, and tempo features.",
+                  "Normalize features."
+                ]
+              },
+              {
+                "step": "Train classification model",
+                "subSteps": [
+                  "Use a CNN or LSTM for audio sequence data.",
+                  "Train and validate the model.",
+                  "Tune using dropout and batch normalization."
+                ]
+              },
+              {
+                "step": "Genre prediction",
+                "subSteps": [
+                  "Predict genre for audio clip.",
+                  "Display confidence scores.",
+                  "Evaluate accuracy per genre."
+                ]
+              }
+            ],
+            "testingMetrics": [
+              "Accuracy and confusion matrix.",
+              "Class-wise precision.",
+              "Inference time per clip."
+            ],
+            "tag": "Machine Learning"
+          },
+          {
+            "title": "Fake News Detector",
+            "description": "Train a model to detect fake news articles using NLP.",
+            "techStack": ["Python", "Scikit-learn", "NLTK"],
+            "difficultyLevel": "Medium",
+            "steps": [
+              {
+                "step": "Preprocess dataset",
+                "subSteps": [
+                  "Use the Fake News Detection dataset.",
+                  "Clean and tokenize articles.",
+                  "Convert to numerical using TF-IDF."
+                ]
+              },
+              {
+                "step": "Train classification model",
+                "subSteps": [
+                  "Use Logistic Regression or XGBoost.",
+                  "Evaluate performance on test set.",
+                  "Optimize for high precision."
+                ]
+              },
+              {
+                "step": "Deploy model",
+                "subSteps": [
+                  "Build a REST API using Flask.",
+                  "Classify articles given a URL or text.",
+                  "Return verdict as real or fake."
+                ]
+              }
+            ],
+            "testingMetrics": [
+              "Precision, recall, F1 score.",
+              "Confusion matrix.",
+              "API response time."
+            ],
+            "tag": "Machine Learning"
+          },
+          {
+            "title": "Breast Cancer Predictor",
+            "description": "Predict if a tumor is malignant or benign using ML.",
+            "techStack": ["Python", "Scikit-learn", "Pandas"],
+            "difficultyLevel": "Easy",
+            "steps": [
+              {
+                "step": "Load the dataset",
+                "subSteps": [
+                  "Use the Breast Cancer Wisconsin dataset.",
+                  "Explore features and target variable.",
+                  "Split into training and test sets."
+                ]
+              },
+              {
+                "step": "Train model",
+                "subSteps": [
+                  "Try Random Forest, SVM, Logistic Regression.",
+                  "Evaluate performance using cross-validation.",
+                  "Tune hyperparameters."
+                ]
+              },
+              {
+                "step": "Deploy predictor",
+                "subSteps": [
+                  "Create a web UI for predictions.",
+                  "Input feature values manually.",
+                  "Display prediction with confidence."
+                ]
+              }
+            ],
+            "testingMetrics": [
+              "Accuracy and ROC-AUC score.",
+              "Precision and recall.",
+              "Confusion matrix."
+            ],
+            "tag": "Machine Learning"
+          },
+          {
+            "title": "Gesture-Based Music Player",
+            "description": "Create a music player that can be controlled using hand gestures captured through a webcam.",
+            "techStack": ["Python", "OpenCV", "TensorFlow", "React"],
+            "difficultyLevel": "Medium",
+            "steps": [
+              {
+                "step": "Gesture recognition model",
+                "subSteps": [
+                  "Train a model to recognize hand gestures using MediaPipe.",
+                  "Map gestures to player controls (play, pause, next, volume).",
+                  "Optimize for real-time performance."
+                ]
+              },
+              {
+                "step": "Music player interface",
+                "subSteps": [
+                  "Build a React-based music player UI.",
+                  "Implement basic audio controls.",
+                  "Create visualization for detected gestures."
+                ]
+              },
+              {
+                "step": "Integration",
+                "subSteps": [
+                  "Connect ML model with frontend via Flask API.",
+                  "Handle real-time gesture commands.",
+                  "Add visual feedback for recognized gestures."
+                ]
+              }
+            ],
+            "testingMetrics": [
+              "Measure gesture recognition accuracy.",
+              "Test response time between gesture and action.",
+              "Verify system works in different lighting conditions."
+            ],
+            "tag": "Machine Learning"
+          },
+          {
+            "title": "Smart Document Scanner",
+            "description": "Build a document scanner that automatically enhances, straightens, and extracts text from images.",
+            "techStack": ["Python", "OpenCV", "Tesseract", "Flask"],
+            "difficultyLevel": "Medium",
+            "steps": [
+              {
+                "step": "Image processing",
+                "subSteps": [
+                  "Implement document edge detection.",
+                  "Create perspective transformation for straightening.",
+                  "Apply image enhancement techniques."
+                ]
+              },
+              {
+                "step": "Text extraction",
+                "subSteps": [
+                  "Integrate Tesseract OCR for text recognition.",
+                  "Process and clean extracted text.",
+                  "Convert to searchable PDF format."
+                ]
+              },
+              {
+                "step": "Web interface",
+                "subSteps": [
+                  "Create drag-and-drop interface for images.",
+                  "Show real-time processing preview.",
+                  "Enable downloading processed documents."
+                ]
+              }
+            ],
+            "testingMetrics": [
+              "Check text extraction accuracy.",
+              "Measure processing speed.",
+              "Test with various document types and qualities."
+            ],
+            "tag": "Machine Learning"
+          },
+          {
+            "title": "Load Balancer Implementation",
+            "description": "Create a custom load balancer to distribute traffic across multiple server instances.",
+            "techStack": ["Node.js", "Redis", "Docker", "Nginx"],
+            "difficultyLevel": "Medium",
+            "steps": [
+              {
+                "step": "Server setup",
+                "subSteps": [
+                  "Create multiple server instances using Docker.",
+                  "Implement health checks for servers.",
+                  "Set up Redis for session persistence."
+                ]
+              },
+              {
+                "step": "Load balancing logic",
+                "subSteps": [
+                  "Implement round-robin algorithm.",
+                  "Add weighted distribution based on server load.",
+                  "Handle server failure scenarios."
+                ]
+              },
+              {
+                "step": "Monitoring",
+                "subSteps": [
+                  "Track server response times.",
+                  "Monitor resource utilization.",
+                  "Implement automatic scaling triggers."
+                ]
+              }
+            ],
+            "testingMetrics": [
+              "Measure request distribution efficiency.",
+              "Test failover capabilities.",
+              "Verify session persistence."
+            ],
+            "tag": "DevOps"
+          }
+        
+      
+      
+      
+
   ]

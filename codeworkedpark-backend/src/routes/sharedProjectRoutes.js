@@ -14,4 +14,10 @@ router.post('/:community/shared-projects/:projectId/join', sharedProjectControll
 // Update project status
 router.patch('/:community/shared-projects/:projectId/status', sharedProjectController.updateProjectStatus);
 
+// Ask a question on a shared project
+router.post('/:community/shared-projects/:projectId/questions', sharedProjectController.askQuestion);
+
+// Answer a question on a shared project
+router.post('/:community/shared-projects/:projectId/questions/:questionId/answers', sharedProjectController.answerQuestion);
+
 module.exports = router;

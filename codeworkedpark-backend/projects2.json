@@ -187,7 +187,7 @@
       "Verify ingredient matching",
       "Check API response time"
     ],
-    "tag": "ML"
+    "tag": "Machine Learning"
   },
   {
     "title": "Real-time Translation App",
@@ -377,7 +377,7 @@
       "Verify processing speed",
       "Check API reliability"
     ],
-    "tag": "ML"
+    "tag": "Machine Learning"
   },
   {
     "title": "Healthcare Management System",

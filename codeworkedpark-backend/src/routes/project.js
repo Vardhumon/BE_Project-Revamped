@@ -13,5 +13,7 @@ router.get('/community/:category', projectController.getCommunityProjects);
 router.get('/user/:userId', projectController.getUserProjects);
 router.post('/community', projectController.createCommunityPost);
 router.post('/update-tasks', projectController.updateTaskProgress);
+router.post('/projects/:projectId/star',projectController.starProject);
+router.get('/projects/stars/:userId',projectController.getStarredProjects);
 
 module.exports = router;

@@ -108,6 +108,7 @@ const CommunityPage = () => {
         checkMembershipStatus();
         fetchCommunityMembers(); // Add this line
         fetchSharedProjects();
+        // fetchStarredProjects();
         const pathParts = window.location.pathname.split("/");
             const community = pathParts[pathParts.length - 1] || "Other";
             // console.log("Community:", community);
@@ -371,6 +372,51 @@ const CommunityPage = () => {
             toast.error("Failed to join project");
         }
     };
+
+    const handleStarProject = async (projectId) => {
+        try {
+            const user = JSON.parse(localStorage.getItem("user"));
+            if (!user) {
+                toast.error("Please login to star projects");
+                return;
+            }
+
+            const pathParts = window.location.pathname.split("/");
+            const community = pathParts[pathParts.length - 1] || "Other";
+
+            const response = await axios.post(`http://localhost:5000/${community}/projects/${projectId}/star`, {
+                userId: user._id
+            });
+
+            setStarredProjects(prev => ({
+                ...prev,
+                [projectId]: !prev[projectId]
+            }));
+
+        } catch (error) {
+            console.error("Error starring project:", error);
+            toast.error("Failed to star project");
+        }
+    };
+
+    const fetchStarredProjects = async () => {
+        try {
+            const user = JSON.parse(localStorage.getItem("user"));
+            if (!user) return;
+
+            const pathParts = window.location.pathname.split("/");
+            const community = pathParts[pathParts.length - 1] || "Other";
+
+            const response = await axios.get(`http://localhost:5000/api/${community}/starred-projects/${user._id}`);
+            const starredMap = {};
+            response.data.forEach(projectId => {
+                starredMap[projectId] = true;
+            });
+            setStarredProjects(starredMap);
+        } catch (error) {
+            console.error("Error fetching starred projects:", error);
+        }
+    };
     
     const handlePublishContent = async () => {
         if (activeTab === 'help-wanted') {
@@ -503,6 +549,7 @@ const CommunityPage = () => {
                                 handleCommentSubmit={handleCommentSubmit}
                                 starredProjects={starredProjects}
                                 setStarredProjects={setStarredProjects}
+                                handleStarProject={handleStarProject}
                             />
                         ) : activeTab === 'members' ? (
                             <MembersList communityMembers={communityMembers} />

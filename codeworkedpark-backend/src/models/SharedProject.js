@@ -43,7 +43,21 @@ const sharedProjectSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now
-    }
+    },
+    // Add to sharedProjectSchema
+questions: [{
+    text: String,
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    userName: String,
+    timestamp: { type: Date, default: Date.now },
+    answers: [{
+      text: String,
+      userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+      userName: String,
+      timestamp: { type: Date, default: Date.now }
+    }]
+  }]
+  
 });
 
 module.exports = mongoose.model('SharedProject', sharedProjectSchema);

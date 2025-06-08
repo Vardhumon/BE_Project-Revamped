@@ -15,15 +15,10 @@ exports.getProjects = async (req, res) => {
 const projectRecommender = require('../ml/recommendation_model');
 
 exports.getProject = async (req, res) => {
-    const { userStack, experienceLevel,category } = req.body;
-    const categoryValue = category.replace(/\s+/g, '').normalize();
-const expectedValue = "Machine Learning".replace(/\s+/g, '').normalize();
-
-console.log('Final equality check:', categoryValue === expectedValue);
-
-
-
-// Log both values to debug the comparison);
+    const { userStack, experienceLevel, category } = req.body;
+    // Normalize by removing hyphens and spaces, converting to lowercase
+    const categoryValue = category.replace(/['"]/g, '').toLowerCase().trim();
+    
     try {
         const projects = await Project.find();
         const difficultyMap = {
@@ -32,11 +27,20 @@ console.log('Final equality check:', categoryValue === expectedValue);
             'advanced': 'hard'
         };
 
-        const filteredProjects = projects.filter((project) =>
-            project.techStack.some((tech) => userStack.includes(tech)) &&
-            project.difficultyLevel.toLowerCase() === difficultyMap[experienceLevel.toLowerCase()]
-            // && project.tag.toLowerCase() === categoryValue.toLowerCase()
-        );
+        const filteredProjects = projects.filter((project) => {
+            // const normalizedProjectTag = project.tag.replace(/[-\s+]/g, '').toLowerCase().trim();
+            // console.log('Comparing:', normalizedProjectTag, 'with:', categoryValue);
+            const normalizedProjectTag = project.tag.toLowerCase();
+const normalizedCategoryValue = categoryValue.toLowerCase();
+
+// console.log('Project tag:', JSON.stringify(normalizedProjectTag));
+// console.log('Category value:', JSON.stringify(normalizedCategoryValue));
+// console.log('Project tag length:', normalizedProjectTag.length);
+// console.log('Category value length:', normalizedCategoryValue.length);
+            return project.techStack.some((tech) => userStack.includes(tech)) &&
+                   project.difficultyLevel.toLowerCase() === difficultyMap[experienceLevel.toLowerCase()]
+                  && normalizedProjectTag === categoryValue;
+        });
         // console.log(filteredProjects);
         if (filteredProjects.length === 0) {
             return res.status(200).json({ message: "No more projects to recommend" });
@@ -221,5 +225,46 @@ exports.updateTaskProgress = async (req, res) => {
         res.status(200).json({ message: "Task progress updated successfully", user });
     } catch (err) {
         res.status(500).json({ message: "Server error", error: err.message });
+    }
+};
+
+// Add star/unstar functionality
+exports.starProject = async (req, res) => {
+    try {
+        const { projectId } = req.params;
+        const { userId } = req.body;
+        console.log(projectId, userId);
+        const project = await Project.findById(projectId);
+        // console.log(project);
+        if (!project) {
+            return res.status(404).json({ message: "Project not found" });
+        }
+
+        const starIndex = project.stars.indexOf(userId);
+        if (starIndex === -1) {
+            // Star the project
+            project.stars.push(userId);
+            await project.save();
+            console.log(project.stars);
+            res.json({ message: "Project starred successfully" });
+        } else {
+            // Unstar the project
+            project.stars.splice(starIndex, 1);
+            await project.save();
+            res.json({ message: "Project unstarred successfully" });
+        }
+    } catch (error) {
+        res.status(500).json({ message: "Error updating project stars" });
+    }
+};
+
+// Get user's starred projects
+exports.getStarredProjects = async (req, res) => {
+    try {
+        const { userId } = req.params;
+        const projects = await Project.find({ stars: userId });
+        res.json(projects.map(project => project._id));
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching starred projects" });
     }
 };

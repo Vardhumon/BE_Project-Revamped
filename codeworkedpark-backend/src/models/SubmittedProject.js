@@ -21,6 +21,31 @@ const submittedProjectSchema = new mongoose.Schema({
     comments: [{ 
         type: mongoose.Schema.Types.ObjectId, 
         ref: "Comment" 
+    }],
+    // Add this to your existing SubmittedProject schema
+    questions: [{
+        text: String,
+        userId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+        },
+        userName: String,
+        timestamp: {
+            type: Date,
+            default: Date.now
+        },
+        answers: [{
+            text: String,
+            userId: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User'
+            },
+            userName: String,
+            timestamp: {
+                type: Date,
+                default: Date.now
+            }
+        }]
     }]
 }, { 
     timestamps: true 

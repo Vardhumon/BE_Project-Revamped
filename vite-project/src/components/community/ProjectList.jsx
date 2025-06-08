@@ -1,38 +1,86 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from "framer-motion";
 import ProjectCard from './ProjectCard';
 import { FileText, Star } from 'lucide-react';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
 
-const ProjectList = ({ submittedProjects, expandedProject, toggleExpand, comments, newComment, setNewComment, handleCommentSubmit ,starredProjects
-    ,setStarredProjects
+const ProjectList = ({ 
+    submittedProjects, 
+    expandedProject, 
+    toggleExpand, 
+    comments, 
+    newComment, 
+    setNewComment, 
+    handleCommentSubmit,
+    starredProjects,
+    setStarredProjects,
+    handleStarProject 
 }) => {
 
     const handleStar = async (projectId) => {
         try {
             const user = JSON.parse(localStorage.getItem("user"));
-            const pathParts = window.location.pathname.split("/");
-            const community = pathParts[pathParts.length - 1] || "Other";
-            
-            const response = await axios.post(`http://localhost:5000/api/projects/${projectId}/star`, {
+            if (!user) {
+                toast.error("Please login to star projects");
+                return;
+            }
+
+            const projectToStar = submittedProjects.find(p => p.projectId._id === projectId);
+            console.log(projectToStar); // Add this line to check the value of projectToStar
+            if (!projectToStar) {
+                toast.error("Project not found");
+                return;
+            }
+
+            const response = await axios.post(`http://localhost:5000/api/projects/${projectToStar.projectId._id}/star`, {
                 userId: user._id
             });
 
-            setStarredProjects(prev => ({
-                ...prev,
-                [projectId]: {
-                    count: response.data.starCount,
-                    isStarred: response.data.isStarred
-                }
-            }));
+            if (response.data.success) {
+                setStarredProjects(prev => ({
+                    ...prev,
+                    [projectId]: {
+                        count: response.data.starCount,
+                        isStarred: response.data.isStarred
+                    }
+                }));
 
-            toast.success(response.data.isStarred ? "Project starred!" : "Project unstarred");
+                // Call the parent component's handler
+                handleStarProject && handleStarProject(projectId, response.data.isStarred);
+                
+                toast.success(response.data.isStarred ? "Project starred!" : "Project unstarred");
+            }
         } catch (error) {
             console.error("Error starring project:", error);
             toast.error("Failed to update star status");
         }
     };
+
+    useEffect(() => {
+        const fetchStarStatus = async () => {
+            try {
+                const user = JSON.parse(localStorage.getItem("user"));
+                if (!user) return;
+
+                const response = await axios.get(`http://localhost:5000/api/projects/stars/${user._id}`);
+                const starData = {};
+                
+                response.data.forEach(project => {
+                    starData[project.projectId] = {
+                        count: project.starCount,
+                        isStarred: project.isStarred
+                    };
+                });
+                
+                setStarredProjects(starData);
+            } catch (error) {
+                console.error("Error fetching star status:", error);
+            }
+        };
+
+        fetchStarStatus();
+    }, []);
 
     if (submittedProjects.length === 0) {
         return (
@@ -50,22 +98,22 @@ const ProjectList = ({ submittedProjects, expandedProject, toggleExpand, comment
     return (
         <div className="space-y-6">
             {submittedProjects.map((project) => (
-                <div key={project._id} className="relative">
-                    <button
-                        onClick={() => handleStar(project._id)}
+                <div key={project.projectId._id} className="relative">
+                    {/* <button
+                        onClick={() => handleStar(project.projectId._id)}
                         className="absolute top-4 right-4 z-10 flex items-center gap-2"
                     >
                         <Star
                             className={`w-5 h-5 ${
-                                starredProjects[project._id]?.isStarred 
+                                starredProjects[project.projectId._id]?.isStarred 
                                     ? "fill-yellow-400 text-yellow-400" 
                                     : "text-gray-400"
                             }`}
                         />
                         <span className="text-sm text-gray-400">
-                            {starredProjects[project._id]?.count || project.stars?.length || 0}
+                            {starredProjects[project.projectId._id]?.count || 0}
                         </span>
-                    </button>
+                    </button> */}
 
                     <ProjectCard 
                         project={project}
